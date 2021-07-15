@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: b9edd71994d78da478434fe93e80a1d5
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - HanyiSentyMarshmallowChalkA
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e295ae92b3f520742b06a669c4a1adf8, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

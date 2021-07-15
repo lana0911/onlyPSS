@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UnityEngine.UI;
+public class Gobal_TCP
+{
+//UI 跑馬燈text -------------------------------------------------------------------------------
+    public static string text1 = "";
+    public static string text2 = "";
+    public static int text_cnt = 0;//兩個輪流showte text
+    //scene Control
+    public static int game_mode = 0;//兩個輪流showte text
+//-------------------------------------------------------------------------------
+
+
+//PSS-------------------------------------------------------------------------------
+    public static int pss_name = 1; //一進去顯示 "剪刀石頭布"
+    public static bool hint_over = false;
+    public static bool hint2_over = false;
+    public static bool back = false;
+    //
+    public static bool hint3_over = false;
+    public static bool hint3_paper = false;
+    public static bool hint3_sci = false;
+    public static bool hint3_stone = false; 
+    //開始計時 + 時間到
+    public static bool countdown = false;
+    public static bool timeup = false;
+    //告訴server可以傳pose資訊了
+    public static bool scanPose = false;
+    //server 傳來的pose
+    public static string model_pose = "";
+    public static string player_pose = "";
+    //winner 是誰
+    public static int PSS_winer = -1;
+    //UI可顯示server指定動作名稱text
+    public static bool show_pose_text = false;
+    //RESET
+    public static bool reset = false;
+
+    //-------------------------------------------------------------------------------
+
+
+
+}
