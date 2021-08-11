@@ -1181,7 +1181,6 @@ GameObject:
   - component: {fileID: 148260650}
   - component: {fileID: 148260653}
   - component: {fileID: 148260652}
-  - component: {fileID: 148260651}
   m_Layer: 5
   m_Name: RawImage
   m_TagString: Untagged
@@ -1208,20 +1207,6 @@ RectTransform:
   m_AnchoredPosition: {x: -577.3965, y: 36.002}
   m_SizeDelta: {x: -1393.7931, y: -226.49}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &148260651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148260649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AspectMode: 0
-  m_AspectRatio: 0.61652106
 --- !u!114 &148260652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1798,11 +1783,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688636464}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f72c5b028566614b9afba5826a134ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Voice: {fileID: 0}
+  VoiceClips: []
   IP: 192.168.56.1
   Port: 8000
   mode_int: 0
@@ -3089,8 +3076,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f0c499fb3e8c064bbd5ff11e7f0c61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  background: {fileID: 148260652}
-  fit: {fileID: 148260651}
+  background: {fileID: 1826986341}
+  fit: {fileID: 0}
 --- !u!114 &2033139458
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,45 @@ using System.Text;
 
 public class img_scale: MonoBehaviour
 {
+
+
     RectTransform rt;
+    public float scale = 4.0f;
+
+
+    void Start()
+    {
+        rt = GetComponent<RectTransform>();
+    }
+
+    void Update()
+    {
+        //500up:人最近 : 放最小圖3.0倍
+        //350~500:人中間遠 : 圖取3.8
+        //250~350:人中間近 : 圖取4.5
+        //250down:人最遠 : 放圖5.3倍
+        if (varName.img_dis > 50000) scale = 3.5f;
+        else if (varName.img_dis > 35000) scale = 4.3f;
+        else if (varName.img_dis > 25000) scale = 4.8f;
+        else if (varName.img_dis <= 25000 && varName.img_dis != 0) scale = 5.8f;
+        else if (varName.img_dis == 0) scale = 4.7f;
+        rt.localScale = new Vector3(scale, scale, scale);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* RectTransform rt;
     public float scale = 4.0f;
     //
     // public string msg;
@@ -49,7 +87,7 @@ public class img_scale: MonoBehaviour
         }
     }
   
-
+    */
 
 
 }

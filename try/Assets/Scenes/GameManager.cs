@@ -11,9 +11,13 @@ using UnityEngine.UI;
 using System.Text;
 using System.Collections.Concurrent;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 public class GameManager : MonoBehaviour
 {
-
+    //cama
+    int fi = 0;
+    public AudioSource Voice = null;
+    public AudioClip[] VoiceClips = null;
     //int game = mode_num.mode;
     public string IP = "192.168.56.1";
     public int Port = 8000;
@@ -66,14 +70,19 @@ public class GameManager : MonoBehaviour
             Debug.Log("switch Sence 2 (Dance Game)");
         }*/
         //掃描剪刀石頭布
-        if (Gobal_TCP.scanPose)
+        if (varName.cnt_end)
         {
             //告訴server可以掃
             client.Send(Encoding.UTF8.GetBytes("pose;"));
+            varName.cnt_end = false;
 
-            //
-            Gobal_TCP.scanPose = false;
-            
+
+        }
+        if (varName.game1Over && fi==0)//告訴server遊戲結束
+        {
+            client.Send(Encoding.UTF8.GetBytes("over;"));
+            //fi = 1;
+            varName.game1Over = false;
         }
 
     }
@@ -85,16 +94,54 @@ public class GameManager : MonoBehaviour
         client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         client.Connect(IP, Port);
         Thread t = new Thread(recvData);
+       
         t.Start();
         
 
     }
+    /*void recvIMG()
+    {
+        Debug.Log("recvIMG start");
+        while (client.Connected)
+        {
+            
+            var bytes = new byte[1024];
+            var count = client.Receive(bytes);
+            float dis;
+            msg = Encoding.UTF8.GetString(bytes, 0, count);
+            //切割 scale;123456
+            string[] msg_split = msg.Split(';');
+            //Debug.Log("完整" + msg);
+           // Debug.Log("msg[0]" + msg_split[0]);
+            //Debug.Log("msg[1]" + msg_split[1]);
+
+
+            if (msg != null)
+            {
+                //接收到openpose 的 回傳資料
+                if (msg_split[0] == "scale")
+                {
+                    //Debug.Log("scale收" + msg_split[1]);
+                    dis = (Convert.ToInt32(msg_split[1]));
+                    //Debug.Log("scale收(dis)" + dis);
+                    varName.img_dis = dis;
+                }
+
+
+            }
+
+        }
+       
+    }*/
     //迴圈收資料
     void recvData()
     {
         int im = 1;
         //告知是unity 看板
         client.Send(Encoding.UTF8.GetBytes("1"));
+        // Thread t_img = new Thread(recvIMG);
+        //t_img.Start();
+        float dis;
         while (client.Connected)
         {
             Debug.Log("switch recv:");
@@ -120,7 +167,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log("收到game1");
                     loadToPSS();
                 }
-                //如果是玩剪刀石頭布 的 回傳資料
+                //接收到openpose 的 回傳資料
                 if(msg_split[0]=="pose")
                 {
                     Debug.Log("Scan結果" + msg_split[1]);
@@ -128,6 +175,13 @@ public class GameManager : MonoBehaviour
                     
                     //判斷輸贏
                     whoWin(msg_split[1]);
+                }                
+                if (msg_split[0] == "scale")
+                {
+                    //Debug.Log("scale收" + msg_split[1]);
+                    dis = (Convert.ToInt32(msg_split[1]));
+                    Debug.Log("scale收(dis)" + dis);
+                    varName.img_dis = dis;
                 }
 
 
@@ -138,49 +192,88 @@ public class GameManager : MonoBehaviour
     ////判斷輸贏
     void whoWin(string pose)
     {
+        //1st: player 2nd:model
         string[] P = pose.Split(' ');
         string player = P[0];
         string model = P[1] ;
-        Gobal_TCP.player_pose = player;
-        Gobal_TCP.model_pose = model;
+        
+        
         //winner : 0=平手, 1=model, 2=player
         //model出剪刀
         if (model == "1")
         {
+            varName.modelPose = "剪刀 Scissor";
             if (player == "1")
-                Gobal_TCP.PSS_winer = 0;
+            {
+                varName.playerPose = "剪刀 Scissor";
+                varName.winner = 0;
+            }
+                
             else if (player == "2")
-                Gobal_TCP.PSS_winer = 2;
+            {
+                varName.winner = 2;
+                varName.playerPose = "石頭 Stone";
+
+            }
             else
-                Gobal_TCP.PSS_winer = 1;
+            {
+                varName.winner = 1;
+                varName.playerPose = "布 Paper";
+
+            }
         }
         //model出石頭
         else if (model == "2")
         {
+            varName.modelPose = "石頭 Stone";
             if (player == "1")
-                Gobal_TCP.PSS_winer = 1;
+            {
+                varName.winner = 1;
+                varName.playerPose = "剪刀 Scissor";
+
+            }
             else if (player == "2")
-                Gobal_TCP.PSS_winer = 0;
+            { 
+                varName.winner = 0;
+                varName.playerPose = "石頭 Stone";
+            }
             else
-                Gobal_TCP.PSS_winer = 2;
+            {
+                varName.winner = 2;
+                varName.playerPose = "布 Paper";
+            }
         }
         //model出布
         else if (model == "3")
         {
+            varName.modelPose = "布 Paper";
             if (player == "1")
-                Gobal_TCP.PSS_winer = 2;
+            {
+                varName.winner = 2;
+                varName.playerPose = "剪刀 Scissor";
+            }
             else if (player == "2")
-                Gobal_TCP.PSS_winer = 1;
+            {
+                varName.winner = 1;
+                varName.playerPose = "石頭 Stone";
+            }
             else
-                Gobal_TCP.PSS_winer = 0;
+            {
+                varName.winner = 0;
+                varName.playerPose = "布 Paper";
+
+            }
         }
-        Debug.Log("winner=" + Gobal_TCP.PSS_winer);
-        
+        Debug.Log("winner=" + varName.winner);
+        //1.讓model做指定動作
+        varName.model_start_animation = true;
+
+
     }
     void loadToPSS()
     {
 
-        Gobal_TCP.game_mode = 1;
+        varName.mode = 1;
     }
 
     //--UI--跑馬燈

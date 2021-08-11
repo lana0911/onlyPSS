@@ -8,13 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scene_ui.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Scene_PSS.unity
     guid: 65298c9728af21b45acb624c31bf9309
   - enabled: 1
+    path: Assets/Scenes/2.unity
+    guid: a482cca9d0c5cff4bb314a6c217bfe43
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 5deb965500846b64ab123fdbbbc2de24
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/init.unity
     guid: 29b21eaa951df194f872070127d01af7
   m_configObjects: {}

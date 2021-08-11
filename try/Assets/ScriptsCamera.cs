@@ -46,17 +46,28 @@ public class ScriptsCamera : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (varName.game1Over == true)
+        {
+            Debug.Log("遊戲結束關鏡頭");
+            backCam.Stop();
+        }
+           
         if (!camAvailable)
             return;
+        if (varName.game1Over == false)
+        {
+            Debug.Log("遊戲還沒結束");
+            float ratio = (float)backCam.width / (float)backCam.height;
+            fit.aspectRatio = ratio;
 
-        float ratio = (float)backCam.width / (float)backCam.height;
-        fit.aspectRatio = ratio;
+            float scaleY = backCam.videoVerticallyMirrored ? -1f : 1f;
+            //        background.rectTransform.localScale = new Vector3 (1f, scaleY, 1f);    //非鏡像
+            background.rectTransform.localScale = new Vector3(-1f, scaleY, 1f);    //鏡像
 
-        float scaleY = backCam.videoVerticallyMirrored ? -1f : 1f;
-        //        background.rectTransform.localScale = new Vector3 (1f, scaleY, 1f);    //非鏡像
-        background.rectTransform.localScale = new Vector3(-1f, scaleY, 1f);    //鏡像
+            int orient = -backCam.videoRotationAngle;
+            background.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
 
-        int orient = -backCam.videoRotationAngle;
-        background.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
+        }
+
     }
 }

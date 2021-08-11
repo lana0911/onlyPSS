@@ -14,23 +14,23 @@ public class change : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Gobal_TCP.game_mode == 0)
+        if (varName.mode == 0)
         {
-            Gobal_TCP.game_mode = 5;
             SceneManager.LoadScene(0);
             Debug.Log("switch Sence 0 (UI)");
+            varName.mode = -1;
         }
-        else if (Gobal_TCP.game_mode == 1)
+        else if (varName.mode == 1)
         {
-            Gobal_TCP.game_mode = 5;
             SceneManager.LoadScene(1);
             Debug.Log("switch Sence 1 (PSS Game)");
+            varName.mode = -1;
         }
-        else if (Gobal_TCP.game_mode == 2)
+        else if (varName.mode == 2)
         {
-            Gobal_TCP.game_mode = 5;
             SceneManager.LoadScene(2);
             Debug.Log("switch Sence 2 (Dance Game)");
+            varName.mode = -1;
         }
 
     }
