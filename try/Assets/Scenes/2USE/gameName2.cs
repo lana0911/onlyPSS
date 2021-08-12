@@ -13,7 +13,7 @@ public class gameName2 : MonoBehaviour
     public Text Intro_titleText;
     public Text breforeCountText;
     public Text countNum;
-    
+    public Camera m_camera;
     //text use
     private float timer;
     int time_int = 17;
@@ -359,9 +359,41 @@ public class gameName2 : MonoBehaviour
             Debug.Log("==" + time_int);
             countNum.text = "";
             CancelInvoke("countdown");
+
+            //倒數完截圖
+            CapImg();
+
+            //截完圖再告訴Server
             varName.cnt_end = true;//告訴openpose可掃描
         }
     }
+    //截圖------------------------------------------------------------
+    void CapImg()
+    {
+        string path = "D:/screenshot" + "/Shot.png";
+        Debug.Log("Path : " + Application.persistentDataPath);
+        Debug.Log("Path2 : " + Application.streamingAssetsPath);
+        Debug.Log("123");
+        RenderTexture rt = new RenderTexture((int)(Screen.width), (int)(Screen.height), 0);
+        Camera cam = Camera.main;
+        m_camera.targetTexture = rt;
+        m_camera.Render();
+        m_camera.targetTexture = null;
+
+        RenderTexture.active = rt;
+
+        Texture2D t = new Texture2D((int)(Screen.width), (int)(Screen.height), TextureFormat.RGB24, false);
+        t.ReadPixels(new Rect(0, 0, (int)(Screen.width), (int)(Screen.height)), 0, 0);
+        t.Apply(false, false);
+
+
+        m_camera.targetTexture = null;
+
+        byte[] bytes = t.EncodeToPNG();
+        File.WriteAllBytes(path, bytes);
+
+    }
+
 }
 /*
 public Text Gift;

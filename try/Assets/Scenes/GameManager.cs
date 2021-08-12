@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
         if (varName.cnt_end)
         {
             //§i¶Dserver¥i¥H±½
-            client.Send(Encoding.UTF8.GetBytes("pose;"));
+            client.Send(Encoding.UTF8.GetBytes("shot;"));
             varName.cnt_end = false;
 
 
