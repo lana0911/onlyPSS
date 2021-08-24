@@ -26,6 +26,7 @@ public class gameName2 : MonoBehaviour
     public GameObject candy;
     public GameObject bg2_img;
     public GameObject takeGift;
+    public GameObject UI_imgs;
     RectTransform rt;
     RectTransform rtBg;
     public Text backto;
@@ -45,6 +46,7 @@ public class gameName2 : MonoBehaviour
         rt = candy.GetComponent<RectTransform>();
         rtBg = bg2_img.GetComponent<RectTransform>();
         candy.SetActive(false);
+        UI_imgs.SetActive(true);
         bg2_img.SetActive(false);
         takeGift.SetActive(false);
     }
@@ -63,7 +65,7 @@ public class gameName2 : MonoBehaviour
             else
             {
                 //Debug.Log(timer);
-                NameText.text = "肢體\n<color=#FF7167>剪刀</color><color=#19B3B1>石頭</color><color=#FFD73D>布</color>";
+                NameText.text = "肢體<color=#FF7167>剪刀</color><color=#19B3B1>石頭</color><color=#FFD73D>布</color>";
                 if (timer > 5.5)
                 {
                     NameText.text = "";
@@ -82,7 +84,7 @@ public class gameName2 : MonoBehaviour
         //提示等下開始倒數
         if (varName.gameIntro2)
         {
-            breforeCountText.text = "待會開始倒數別忘記擺動作喔";
+            breforeCountText.text = "待會開始倒數\n別忘記擺動作喔";
             StartCoroutine(wait(4f, 2));
         }
         //開始倒數
@@ -214,7 +216,7 @@ public class gameName2 : MonoBehaviour
             backto.text = "回主畫面中...";
             varName.game1Over = true;
             //3s後回UI
-            StartCoroutine(wait(3.0f, 8));
+            StartCoroutine(wait(1.5f, 8));
         }
         if (type == 8)//just stop for candy go down
         {
@@ -252,6 +254,7 @@ public class gameName2 : MonoBehaviour
     // //頒發獎品-----------------------------------------------------------------------
     void ceremony()
     {
+        UI_imgs.SetActive(false);
         varName.came = true;
         bg2_img.SetActive(true);
       
@@ -304,7 +307,7 @@ public class gameName2 : MonoBehaviour
         {
             CancelInvoke("goDown");
             //1.5s後印 "回主畫面"
-            StartCoroutine(wait(1.5f, 7));
+            StartCoroutine(wait(0.5f, 7));
         }
         if(direct==0)
         {

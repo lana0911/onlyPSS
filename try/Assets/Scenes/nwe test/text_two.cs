@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using System.Text;
 public class text_two : MonoBehaviour
 {
-    Text words; 
-    float leftX; 
+    Text words;
+    float leftX;
     public float speed = 0.5f;
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class text_two : MonoBehaviour
         {
             this.gameObject.transform.Translate(1600, 0, 0);
         }
-  
+
         words.text = Gobal_TCP.text2;
     }
 }
