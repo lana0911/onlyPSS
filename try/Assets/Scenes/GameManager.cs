@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     public AudioSource Voice = null;
     public AudioClip[] VoiceClips = null;
     //int game = mode_num.mode;
-    public string IP = "192.168.56.1";
-    public int Port = 8000;
+    public string IP ;
+    public int Port ;
     public int mode_int = 0;
     public Socket client;
     int i = 0;
