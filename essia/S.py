@@ -77,7 +77,7 @@ def classfly(client_executor, addr):
             print("tagrt=",target)
             #taget是要傳訊息到看板
             if(target == "text"):
-                text(client_executor,msg)
+                text(client_executor,msg_jpy)
             #game1是要玩猜拳
             if target == "game1" :
                 print("猜拳")
@@ -96,7 +96,7 @@ def classfly(client_executor, addr):
                 #暫停3秒等照片+辨識
                 # time.sleep(5)
                 # print("5秒結束")
-                print(img_over_str)
+                print("img_over_str=",img_over_str)
                 if(img_over_str == "imgover"):
                     print("status==1")
                     #開始讀檔
@@ -107,6 +107,8 @@ def classfly(client_executor, addr):
                     print('send complete')
                     client_executor.close()
                     break
+            if(target == "pauma"):
+                text(client_executor,msg)
     elif(who_jpy == "3"):#手機專門傳圖片
         print("who==3+",who)
         # img_index = client_executor.recv(1024) 
@@ -170,6 +172,7 @@ def unityRecv(client_executor):
             global t_face
             # if(recv_split[1]=="0"):
             client_executor.send("over".encode('utf-8'))
+            # client_executor.close()
             time.sleep(3)
             t_face2 = threading.Thread(target=face)
             t_face2.start()
@@ -225,7 +228,7 @@ def game1(client_executor,content):
 
 def text(client_executor, content):
     print("text()中心收到訊息:",content)
-    #傳給看板 e.g.: text;Welcome
+    # #傳給看板 e.g.: text;Welcome
     clients[0].send(bytes(content.encode('utf-8')))
     client_executor.send("收到".encode('utf-8'))
    
