@@ -9,6 +9,8 @@ import jpysocket
 import base64
 import time
 i=0
+#編號
+index = 0
 playing = False 
 list =0
 scale =0 
@@ -31,6 +33,8 @@ step 2: classfly 會收到一則client的分類訊息,根據分類去不同副�
         java client要玩遊戲 =>告知unity切換場景
 """
 clients=[]
+cellphone=[]
+imgStatus=[0] * 20
 #分類
 def classfly(client_executor, addr):
     print("welcome to classfy")
@@ -51,6 +55,14 @@ def classfly(client_executor, addr):
         unityRecv(client_executor)#開啟迴圈監聽
     elif(who_jpy=="2"):#手機cliet
         print("who==",who)
+        #給編號
+        global index
+        print("index=",index)
+        index_str = "index;" + str(index)
+        client_executor.send(jpysocket.jpyencode(index_str))
+        cellphone.insert(index, client_executor)
+        print("-----------------------------------cellphone=",cellphone)
+        index += 1
         #不斷接收client(手機)傳來的訊息
         while True:
             msg = client_executor.recv(1024) 
@@ -79,19 +91,27 @@ def classfly(client_executor, addr):
             if(target == "facer"):
                 print("收到手機傳facer")
                 client_executor.send(jpysocket.jpyencode("StartSend"))
+                img_over_str = client_executor.recv(1024) 
+                img_over_str = jpysocket.jpydecode(img_over_str) 
                 #暫停3秒等照片+辨識
-                time.sleep(5)
-                print("5秒結束")
-                #開始讀檔
-                fa = open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/rec.txt","r")
-                ans = fa.readline()
-                print(ans)
-                client_executor.send(jpysocket.jpyencode(ans))
-                print('send complete')
-                client_executor.close()
-                break
+                # time.sleep(5)
+                # print("5秒結束")
+                print(img_over_str)
+                if(img_over_str == "imgover"):
+                    print("status==1")
+                    #開始讀檔
+                    fa = open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/rec.txt","r")
+                    ans = fa.readline()
+                    print(ans)
+                    client_executor.send(jpysocket.jpyencode(ans))
+                    print('send complete')
+                    client_executor.close()
+                    break
     elif(who_jpy == "3"):#手機專門傳圖片
         print("who==3+",who)
+        # img_index = client_executor.recv(1024) 
+        # img_index = jpysocket.jpydecode(img_index) 
+        # print("img_index=",img_index)      
         imgWrite(client_executor)
 
     else:
@@ -122,8 +142,14 @@ def imgWrite(client_executor):
         fh.write(img)
         fh.close()
     print("ok2")
-    
-    time.sleep(1)    
+
+
+    # img_index = client_executor.recv(1024) 
+    # img_index = jpysocket.jpydecode(img_index) 
+    # print("img_index=",img_index)   
+    # imgStatus[int(img_index)] = 1
+    # print("更改",imgStatus)
+    time.sleep(1)        
  
 
 #接收unity傳來的
@@ -197,27 +223,12 @@ def game1(client_executor,content):
     print("game1")
     clients[0].send(bytes("game1;".encode('utf-8')))
 
-
-    
-
-        
-
 def text(client_executor, content):
     print("text()中心收到訊息:",content)
     #傳給看板 e.g.: text;Welcome
     clients[0].send(bytes(content.encode('utf-8')))
     client_executor.send("收到".encode('utf-8'))
    
-
-
-
-
-
-
-
-
-
-
 
 def seand_scale():
     global scale
