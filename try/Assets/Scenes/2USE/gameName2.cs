@@ -25,12 +25,14 @@ public class gameName2 : MonoBehaviour
     //img
     public GameObject candy;
     public GameObject bg2_img;
-    public GameObject takeGift;
+    public GameObject takeGift; 
+    public GameObject bg2_lose;
+    public GameObject noGift;
     public GameObject UI_imgs;
     RectTransform rt;
     RectTransform rtBg;
     public Text backto;
-    int y = 13;
+    double y = -213;
     int direct = 0;
     int downCnt = 0;
     float scale = 0.0f;
@@ -49,6 +51,8 @@ public class gameName2 : MonoBehaviour
         UI_imgs.SetActive(true);
         bg2_img.SetActive(false);
         takeGift.SetActive(false);
+        bg2_lose.SetActive(false);
+        noGift.SetActive(false);
     }
 
     void Update()
@@ -254,34 +258,33 @@ public class gameName2 : MonoBehaviour
     // //頒發獎品-----------------------------------------------------------------------
     void ceremony()
     {
-        UI_imgs.SetActive(false);
+        //UI_imgs.SetActive(false);
         varName.came = true;
-        bg2_img.SetActive(true);
-      
-        InvokeRepeating("bgScale", 1, 0.08f);
 
         if (varName.winner == 2 || varName.winner == 0)//pleyer win or tie 有獎品
         {
             candy.SetActive(true);
+            bg2_img.SetActive(true);
+            takeGift.SetActive(true);
 
-
-            InvokeRepeating("goDown", 1, 0.008f);
+            InvokeRepeating("goDown", 1, 0.00008f);
            // InvokeRepeating("goDown_Forlight", 1, 0.005f);
 
 
         }
         else if (varName.winner == 1)//model win 無獎品
         {
-
+            noGift.SetActive(true);
+            bg2_lose.SetActive(true);
             candy.SetActive(true);
-            InvokeRepeating("goDown", 1, 0.008f);
+            InvokeRepeating("goDown", 1, 0.00008f);
            // InvokeRepeating("goDown_Forlight", 1, 0.005f);
 
         }
 
     }
     //----------------------------------------------------------------------------------
-    void bgScale()
+/*    void bgScale()
     {
 
         //Debug.Log("scale=" + scale);
@@ -295,7 +298,7 @@ public class gameName2 : MonoBehaviour
         }
         rt.localScale = new Vector3(scale_Candy, scale_Candy, scale_Candy);
         rtBg.localScale = new Vector3(scale, scale, scale);
-    }
+    }*/
         //----------------------------------------------------------------------------------
     void goDown()
     {
@@ -307,12 +310,12 @@ public class gameName2 : MonoBehaviour
         {
             CancelInvoke("goDown");
             //1.5s後印 "回主畫面"
-            StartCoroutine(wait(0.5f, 7));
+            StartCoroutine(wait(0.05f, 7));
         }
         if(direct==0)
         {
-            y -= 1;
-            if(y<-36)
+            y -= 0.5;
+            if(y<-243)
             {
                 direct = 1;
                 downCnt++;
@@ -320,14 +323,14 @@ public class gameName2 : MonoBehaviour
         }
         if (direct == 1)
         {
-            y += 1;
-            if (y > 13)
+            y += 0.5;
+            if (y > -213)
             {
                 downCnt++;
                 direct = 0;
             }
         }
-        rt.localPosition = new Vector3(50, y, 0);
+        rt.localPosition = new Vector3((float)7, (float)y, 0);
         //rt.localScale = new Vector3(scale, scale, scale);
         //rt.localPosition = new Vector3(-26, y, 0);
         //if()
