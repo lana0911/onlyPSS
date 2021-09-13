@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/2.unity
     guid: a482cca9d0c5cff4bb314a6c217bfe43
   - enabled: 1
+    path: Assets/Scenes/daceing.unity
+    guid: 5f5a11d27508f454b9dc231a0a5c57f8
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 5deb965500846b64ab123fdbbbc2de24
   - enabled: 0

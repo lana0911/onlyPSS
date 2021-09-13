@@ -1196,7 +1196,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 834128750}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &834128752
 Camera:
   m_ObjectHideFlags: 0
@@ -2542,7 +2542,7 @@ MonoBehaviour:
   Voice: {fileID: 0}
   VoiceClips: []
   IP: 192.168.56.1
-  Port: 8000
+  Port: 5050
   mode_int: 0
 --- !u!1 &1891339759
 GameObject:

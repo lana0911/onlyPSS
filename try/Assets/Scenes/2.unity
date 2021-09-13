@@ -3155,7 +3155,7 @@ MonoBehaviour:
   Voice: {fileID: 0}
   VoiceClips: []
   IP: 192.168.56.1
-  Port: 8000
+  Port: 5050
   mode_int: 0
 --- !u!4 &1811921272
 Transform:

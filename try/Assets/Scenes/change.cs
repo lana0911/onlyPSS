@@ -29,7 +29,7 @@ public class change : MonoBehaviour
         else if (varName.mode == 2)
         {
             SceneManager.LoadScene(2);
-            Debug.Log("switch Sence 2 (Dance Game)");
+            Debug.Log("switch Sence 3 (Dance Game)");
             varName.mode = -1;
         }
 

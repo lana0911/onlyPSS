@@ -42,5 +42,27 @@ public class Gobal_TCP
     //-------------------------------------------------------------------------------
 
 
+    //-------------------------
+    public static Vector3 leftShoulderPos;
+    public static Vector3 leftForeArmPos;
+    public static Vector3 leftHandPos;
+
+    public static Vector3 headPos;
+    public static Vector3 neckPos;
+    public static Vector3 spine2Pos;
+
+    public static Vector3 rightShoulderPos;
+    public static Vector3 rightForeArmPos;
+    public static Vector3 rightHandPos;
+
+    public static Vector3 leftupLegPos;
+    public static Vector3 leftLegPos;
+    public static Vector3 leftFootPos;
+
+
+    public static Vector3 rightupLegPos;
+    public static Vector3 rightLegPos;
+    public static Vector3 rightFootPos;
+    
 
 }

@@ -144,7 +144,8 @@ public class GameManager : MonoBehaviour
         float dis;
         while (client.Connected)
         {
-            Debug.Log("switch recv:");
+       
+
             //收到訊息範例 : text;welcome
             var bytes = new byte[1024];
             var count = client.Receive(bytes);
@@ -167,8 +168,14 @@ public class GameManager : MonoBehaviour
                     Debug.Log("收到game1");
                     loadToPSS();
                 }
+                else if (msg_split[0] == "game2")
+                {
+                    Debug.Log("收到game2");
+                    loadToDance();
+                }
+
                 //接收到openpose 的 回傳資料
-                if(msg_split[0]=="pose")
+                if (msg_split[0]=="pose")
                 {
                     Debug.Log("Scan結果" + msg_split[1]);
                     //啟動model做指定動作
@@ -180,11 +187,69 @@ public class GameManager : MonoBehaviour
                 {
                     //Debug.Log("scale收" + msg_split[1]);
                     dis = (Convert.ToInt32(msg_split[1]));
-                    Debug.Log("scale收(dis)" + dis);
+                    //Debug.Log("scale收(dis)" + dis);
                     varName.img_dis = dis;
                 }
+                if(msg_split[0] == "k")
+                {
+                    Debug.Log("關節點" + msg);
+                    string[] sArray = msg.Split(';');
+                    Gobal_TCP.leftShoulderPos.x = float.Parse(sArray[1]);
+                    Gobal_TCP.leftShoulderPos.y = float.Parse(sArray[2]);
+                    Gobal_TCP.leftShoulderPos.z = float.Parse(sArray[3]);
+                    Gobal_TCP.leftForeArmPos.x = float.Parse(sArray[4]);
+                    Gobal_TCP.leftForeArmPos.y = float.Parse(sArray[5]);
+                    Gobal_TCP.leftForeArmPos.z = float.Parse(sArray[6]);
+                    Gobal_TCP.leftHandPos.x = float.Parse(sArray[7]);
+                    Gobal_TCP.leftHandPos.y = float.Parse(sArray[8]);
+                    Gobal_TCP.leftHandPos.z = float.Parse(sArray[9]);
+
+                    Gobal_TCP.headPos.x = float.Parse(sArray[10]);
+                    Gobal_TCP.headPos.y = float.Parse(sArray[11]);
+                    Gobal_TCP.headPos.z = float.Parse(sArray[12]);
+                    Gobal_TCP.neckPos.x = float.Parse(sArray[13]);
+                    Gobal_TCP.neckPos.y = float.Parse(sArray[14]);
+                    Gobal_TCP.neckPos.z = float.Parse(sArray[15]);
+                    Gobal_TCP.spine2Pos.x = float.Parse(sArray[16]);
+                    Gobal_TCP.spine2Pos.y = float.Parse(sArray[17]);
+                    Gobal_TCP.spine2Pos.z = float.Parse(sArray[18]);
+
+                    Gobal_TCP.rightShoulderPos.x = float.Parse(sArray[19]);
+                    Gobal_TCP.rightShoulderPos.y = float.Parse(sArray[20]);
+                    Gobal_TCP.rightShoulderPos.z = float.Parse(sArray[21]);
+                    Gobal_TCP.rightForeArmPos.x = float.Parse(sArray[22]);
+                    Gobal_TCP.rightForeArmPos.y = float.Parse(sArray[23]);
+                    Gobal_TCP.rightForeArmPos.z = float.Parse(sArray[24]);
+                    Gobal_TCP.rightHandPos.x = float.Parse(sArray[25]);
+                    Gobal_TCP.rightHandPos.y = float.Parse(sArray[26]);
+                    Gobal_TCP.rightHandPos.z = float.Parse(sArray[27]);
+
+                    Gobal_TCP.leftupLegPos.x = float.Parse(sArray[28]);
+                    Gobal_TCP.leftupLegPos.y = float.Parse(sArray[29]);
+                    Gobal_TCP.leftupLegPos.z = float.Parse(sArray[30]);
+                    Gobal_TCP.leftLegPos.x = float.Parse(sArray[31]);
+                    Gobal_TCP.leftLegPos.y = float.Parse(sArray[32]);
+                    Gobal_TCP.leftLegPos.z = float.Parse(sArray[33]);
+                    Gobal_TCP.leftFootPos.x = float.Parse(sArray[34]);
+                    Gobal_TCP.leftFootPos.y = float.Parse(sArray[35]);
+                    Gobal_TCP.leftFootPos.z = float.Parse(sArray[36]);
+
+                    Gobal_TCP.rightupLegPos.x = float.Parse(sArray[37]);
+                    Gobal_TCP.rightupLegPos.y = float.Parse(sArray[38]);
+                    Gobal_TCP.rightupLegPos.z = float.Parse(sArray[39]);
+                    Gobal_TCP.rightLegPos.x = float.Parse(sArray[40]);
+                    Gobal_TCP.rightLegPos.y = float.Parse(sArray[41]);
+                    Gobal_TCP.rightLegPos.z = float.Parse(sArray[42]);
+                    Gobal_TCP.rightFootPos.x = float.Parse(sArray[43]);
+                    Gobal_TCP.rightFootPos.y = float.Parse(sArray[44]);
+                    Gobal_TCP.rightFootPos.z = float.Parse(sArray[45]);
 
 
+                }
+
+            }else
+            {
+                client.Close();
             }
 
         }
@@ -275,7 +340,10 @@ public class GameManager : MonoBehaviour
 
         varName.mode = 1;
     }
-
+    void loadToDance()
+    {
+        varName.mode = 2;
+    }
     //--UI--跑馬燈
     void pamadan(string content)
     {
