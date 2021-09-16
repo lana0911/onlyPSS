@@ -85,7 +85,8 @@ def kinect(client_executor):
     print("kinect副函")
     while True:
         recv = client_executor.recv(1024).decode('utf-8')
-        print("收:"+recv)
+        if(recv != None):
+            print("收:"+recv)
         clients[0].send(bytes(recv.encode('utf-8')))
         
 #接收unity傳來的
@@ -311,7 +312,7 @@ t_face = threading.Thread(target=face)
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('192.168.56.1', 5050))
+    listener.bind(('10.22.20.114', 5050))
     listener.listen(5)
     print('Waiting for connect...')
     #建List

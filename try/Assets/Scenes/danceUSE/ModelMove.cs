@@ -58,7 +58,7 @@ public class ModelMove : MonoBehaviour
 	int flag = 0;
 
 
-
+	float i = 0.0f;
 
 	private string[] text;
 	int video = 0;
@@ -77,10 +77,11 @@ public class ModelMove : MonoBehaviour
     //伺服
     void Start()
     {
+		transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+
 		/**/
 		leftHandPos = Gobal_TCP.leftHandPos;
-		Debug.Log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + leftHandPos);
-
+		Debug.Log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~start~" + leftHandPos);
 		leftForeArmPos = Gobal_TCP.leftForeArmPos;
 		leftShoulderPos = Gobal_TCP.leftShoulderPos;
 
@@ -97,6 +98,7 @@ public class ModelMove : MonoBehaviour
 		rightFootPos = Gobal_TCP.rightFootPos;
 		rightLegPos = Gobal_TCP.rightLegPos;
 		rightupLegPos = Gobal_TCP.rightupLegPos;
+
 		//*--------------------------------------
 
 
@@ -142,16 +144,38 @@ public class ModelMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(flag == 1) {
-        //print(rightHand.transform.position);
+
+		//print(rightHand.transform.position);
 		//leftShoulder.transform.rotation = leftShoulderOri;
 		//leftForeArm.transform.rotation = leftForeArmOri;
 		//leftHand.transform.rotation = leftHandOri;
-		
-		//print(temp.transform.position.y);
-		
-		Quaternion opred = Quaternion.Euler(0f, 90f, 0f);
 
+		//print(temp.transform.position.y);
+		leftHandPos = Gobal_TCP.leftHandPos;
+		leftForeArmPos = Gobal_TCP.leftForeArmPos;
+		leftShoulderPos = Gobal_TCP.leftShoulderPos;
+
+		headPos = Gobal_TCP.headPos;
+		neckPos = Gobal_TCP.neckPos;
+		spine2Pos = Gobal_TCP.spine2Pos;
+		rightHandPos = Gobal_TCP.rightHandPos;
+		rightForeArmPos = Gobal_TCP.rightForeArmPos;
+		rightShoulderPos = Gobal_TCP.rightShoulderPos;
+		leftFootPos = Gobal_TCP.leftFootPos;
+		leftLegPos = Gobal_TCP.leftLegPos;
+		leftupLegPos = Gobal_TCP.leftupLegPos;
+
+		rightFootPos = Gobal_TCP.rightFootPos;
+		rightLegPos = Gobal_TCP.rightLegPos;
+		rightupLegPos = Gobal_TCP.rightupLegPos;
+
+
+		Quaternion opred = Quaternion.Euler(0f, 90f, 0f);
+		//Debug.Log("~~~~~~~~~~~~~~~~~~~~~POSITION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + leftShoulder.transform.position);
+		Debug.Log("~~~~~~~~~~~~~~~~~~~Gobal_TCP.rightHandPos~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + Gobal_TCP.rightHandPos);
+		Debug.Log("!!!!!!!!!!!!!!!!!!!!rightHandPos!!!!!!!!!!!!!!!!!!" + rightHandPos);
+
+		
 		//leftHand
 		leftShoulder.transform.position = leftShoulderPos;
 		leftForeArm.transform.position = leftForeArmPos;
@@ -162,7 +186,7 @@ public class ModelMove : MonoBehaviour
 		leftForeArm.transform.rotation = rotation * opred;
 		
 		//head
-		//head.transform.position = headPos;
+		head.transform.position = headPos;
 		neck.transform.position = neckPos;
 		spine2.transform.position = spine2Pos;
 		rotation = Quaternion.LookRotation(headPos - neckPos, Vector3.forward); 
@@ -200,19 +224,19 @@ public class ModelMove : MonoBehaviour
 		vector2From = (Vector2)(leftForeArmPos - leftShoulderPos);
 		vector2To = (Vector2)(leftHandPos - leftForeArmPos);
 		angle = vector2From.AngleTo(vector2To);
-		print(angle);
+		//print(angle);
 		
 		vector2From = (Vector2)(leftShoulderPos - neckPos);
 		vector2To = (Vector2)(leftForeArmPos - leftShoulderPos);
 		angle1 = vector2From.AngleTo(vector2To);
-		print(angle1);
-		print("---");
+		//print(angle1);
+		//print("---");
 
 		if( angle > 148 && angle < 238 && angle1 > 62 && angle1 < 152 && video == 0) {
 			//videoThread = new Thread(new ThreadStart(playVideo.Play));
 			//videoThread.Start();
 			//playVideo.Play();
-			video = 1;
+			//video = 1;
 			time = DateTime.Now.Millisecond;
 			second = DateTime.Now.Second;
 		}
@@ -265,7 +289,7 @@ public class ModelMove : MonoBehaviour
 			timeFlag = 0;
 		}
 		
-		} // if flag = 1		
+			
     }
 	
 	void OnApplicationQuit()

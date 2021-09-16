@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
             //切割
             string[] msg_split = msg.Split(';');
             Debug.Log("完整" + msg);
-            Debug.Log("msg[0]" + msg_split[0]);
+            //Debug.Log("msg[0]" + msg_split[0]);
             //Debug.Log("msg[1]" + msg_split[1]);
 
             
@@ -192,9 +192,11 @@ public class GameManager : MonoBehaviour
                 }
                 if(msg_split[0] == "k")
                 {
-                    Debug.Log("關節點" + msg);
+                    //Debug.Log("關節點" + msg);
                     string[] sArray = msg.Split(';');
                     Gobal_TCP.leftShoulderPos.x = float.Parse(sArray[1]);
+                    //print("~~~~~~~~~~~@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ float.Parse(sArray[1])=" + float.Parse(sArray[1]));
+
                     Gobal_TCP.leftShoulderPos.y = float.Parse(sArray[2]);
                     Gobal_TCP.leftShoulderPos.z = float.Parse(sArray[3]);
                     Gobal_TCP.leftForeArmPos.x = float.Parse(sArray[4]);
@@ -244,7 +246,10 @@ public class GameManager : MonoBehaviour
                     Gobal_TCP.rightFootPos.y = float.Parse(sArray[44]);
                     Gobal_TCP.rightFootPos.z = float.Parse(sArray[45]);
 
-
+                    //print("Gobal_TCP.leftShoulderPos" + Gobal_TCP.leftShoulderPos);
+                    print("Gobal_TCP.leftForeArmPos" + Gobal_TCP.leftForeArmPos);
+                    print("Gobal_TCP.rightFootPos" + Gobal_TCP.rightFootPos);
+                    print("Gobal_TCP.leftFootPos" + Gobal_TCP.leftFootPos);
                 }
 
             }else
