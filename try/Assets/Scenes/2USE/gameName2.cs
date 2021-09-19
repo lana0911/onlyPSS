@@ -5,10 +5,13 @@ using System.IO;
 using UnityEngine;
 
 using UnityEngine.UI; //使用Unity UI程式庫。 (Text是UI的一部份哦! 要使用就必須要加，不然會出現錯誤!)
-
+using UnityEngine.Audio;
 public class gameName2 : MonoBehaviour
 {
-
+    //音效
+    public AudioSource UnityChanVoice = null;
+    public AudioClip[] UnityChanVoiceClips = null;
+    ///
     public Text NameText;
     public Text Intro_titleText;
     public Text breforeCountText;
@@ -197,16 +200,24 @@ public class gameName2 : MonoBehaviour
             {
                 Winner.text = "YOU LOSE";
                 UnityChanControl.SetBool("Win", true);
+                //音效
+                UnityChanVoice.clip = UnityChanVoiceClips[0];
+                UnityChanVoice.Play();
             }
             else if (varName.winner == 0)//model win
             {
                 Winner.text = "TIE";
                 UnityChanControl.SetBool("Win", true);
+                //音效
+                UnityChanVoice.clip = UnityChanVoiceClips[0];
+                UnityChanVoice.Play();
             }
             else if (varName.winner == 2)//player win
             {
                 Winner.text = "YOU WIN";
                 UnityChanControl.SetBool("Lose", true);
+                UnityChanVoice.clip = UnityChanVoiceClips[1];
+                UnityChanVoice.Play();
             }
             ////在等2s 進入頒發獎品
             StartCoroutine(wait(3.0f, 6)); 

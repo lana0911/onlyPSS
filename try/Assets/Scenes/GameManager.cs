@@ -195,8 +195,6 @@ public class GameManager : MonoBehaviour
                     //Debug.Log("Ãö¸`ÂI" + msg);
                     string[] sArray = msg.Split(';');
                     Gobal_TCP.leftShoulderPos.x = float.Parse(sArray[1]);
-                    //print("~~~~~~~~~~~@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ float.Parse(sArray[1])=" + float.Parse(sArray[1]));
-
                     Gobal_TCP.leftShoulderPos.y = float.Parse(sArray[2]);
                     Gobal_TCP.leftShoulderPos.z = float.Parse(sArray[3]);
                     Gobal_TCP.leftForeArmPos.x = float.Parse(sArray[4]);
