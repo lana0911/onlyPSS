@@ -378,7 +378,9 @@ public class gameName2 : MonoBehaviour
             CancelInvoke("countdown");
 
             //倒數完截圖
-            CapImg();
+            //CapImg();
+            // MakeCameraImg(m_camera, 500, 500);
+            CaptureScreenByRT(m_camera);
 
             //截完圖再告訴Server
             varName.cnt_end = true;//告訴openpose可掃描
@@ -395,7 +397,7 @@ public class gameName2 : MonoBehaviour
         Camera cam = Camera.main;
         m_camera.targetTexture = rt;
         m_camera.Render();
-        m_camera.targetTexture = null;
+        m_camera.targetTexture = null;//
 
         RenderTexture.active = rt;
 
@@ -411,6 +413,48 @@ public class gameName2 : MonoBehaviour
 
     }
 
+
+    private void MakeCameraImg(Camera mCam, int width, int height)
+    {
+        //Image mImage;
+        RenderTexture rt = new RenderTexture((int)(Screen.width), (int)(Screen.height), 0);
+        mCam.pixelRect = new Rect(0, 0, Screen.width, Screen.height);
+        mCam.targetTexture = rt;
+        Texture2D screenShot = new Texture2D((int)(Screen.width), (int)(Screen.height), TextureFormat.RGB24, false);
+        mCam.Render();
+        RenderTexture.active = rt;
+        screenShot.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+        mCam.targetTexture = null;
+        RenderTexture.active = null;
+        UnityEngine.Object.Destroy(rt);
+        byte[] bytes = screenShot.EncodeToPNG();
+        string filename = "D:/screenshot" + "/Shot.png";
+        System.IO.File.WriteAllBytes(filename, bytes);
+    }
+    public void CaptureScreenByRT(Camera camera)
+    {
+        Rect rect = new Rect(0, 0, Screen.width, Screen.height);
+        // 创建一个RenderTexture对象  
+        RenderTexture rt = new RenderTexture((int)rect.width, (int)rect.height, 0);
+        // 临时设置相关相机的targetTexture为rt, 并手动渲染相关相机  
+        camera.targetTexture = rt;
+        camera.Render();
+        // 激活这个rt, 并从中中读取像素。  
+        RenderTexture.active = rt;
+        Texture2D screenShot = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
+        // 注：这个时候，它是从RenderTexture.active中读取像素
+        screenShot.ReadPixels(rect, 0, 0);
+        screenShot.Apply();
+        // 重置相关参数，以使用camera继续在屏幕上显示  
+        camera.targetTexture = null;
+        RenderTexture.active = null;
+        GameObject.Destroy(rt);
+        // 最后将这些纹理数据，成一个png图片文件  
+        byte[] bytes = screenShot.EncodeToPNG();
+        string fileName = "D:/screenshot" + "/Shot.png";
+
+        System.IO.File.WriteAllBytes(fileName, bytes);
+    }
 }
 /*
 public Text Gift;

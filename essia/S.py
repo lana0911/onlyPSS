@@ -12,6 +12,8 @@ i=0
 #編號
 index = 0
 playing = False 
+playing2 = False 
+
 list =0
 scale =0 
 cam = cv2.VideoCapture(0)
@@ -87,6 +89,14 @@ def classfly(client_executor, addr):
                 else:
                     game1(client_executor,msg)
                     #client_executor.send("遊戲即將開始".encode('utf-8'))
+            if(target == "game2"):
+                global playing2 
+                print("game2")
+                if(playing2==True):#已經有人在玩
+                    client_executor.send("sorry, someone playing...".encode('utf-8'))
+                else:
+                    client_executor.send("遊戲即將開始".encode('utf-8'))
+                    game2(client_executor,msg)
             #要辨識人臉
             if(target == "facer"):
                 print("收到手機傳facer")
@@ -128,7 +138,7 @@ def kinect(client_executor):
     print("kinect副函")
     while True:
         recv = client_executor.recv(1024).decode('utf-8')
-        print("收:"+recv)
+        # print("收:"+recv)
         clients[0].send(bytes(recv.encode('utf-8')))
         
 def imgWrite(client_executor):
@@ -171,6 +181,8 @@ def unityRecv(client_executor):
     #img_scale(client_executor)
     print("-----------------開始監聽unity傳來的訊息----------------------")
     global playing 
+    global playing2 
+
     while True:
         recv = client_executor.recv(1024).decode('utf-8')
         recv_split = recv.split(";")
@@ -238,6 +250,16 @@ def game1(client_executor,content):
     print("game1")
     clients[0].send(bytes("game1;".encode('utf-8')))
 
+
+#玩跳舞
+def game2(client_executor,content):
+    
+    #遊戲使用中
+    global playing2 
+    playing2 = True
+    #傳給看板  e.g: game1
+    clients[0].send(bytes("game2;".encode('utf-8')))
+
 def text(client_executor, content):
     print("text()中心收到訊息:",content)
     # #傳給看板 e.g.: text;Welcome
@@ -248,6 +270,7 @@ def text(client_executor, content):
 def seand_scale():
     global scale
     global playing
+    global playing2
     while (True):
         # print("scale=",scale)
         scale_send = "scale; "+ str(scale)
@@ -257,7 +280,7 @@ def seand_scale():
             n=2
         else:
             # print("yes")
-            if(playing==False):
+            if(playing==False or playing2==False):
                 clients[0].send(bytes(scale_send.encode('utf-8')))
         time.sleep(0.5)
 def Getface(image):
@@ -322,11 +345,12 @@ def Getface(image):
     return image
 def face():
     global playing
+    global playing2
       
     #開啟鏡頭
     global cam
     print("isopen",cam.isOpened())
-    if(cam.isOpened()==False and playing==False):
+    if(cam.isOpened()==False and playing==False or cam.isOpened()==False and playing2==False):
         print("jump here")
         cam = cv2.VideoCapture(0)
         cam.open(0)
@@ -340,7 +364,7 @@ def face():
     print("後isopen",cam.isOpened())
     #out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (width,height))
     while(cam.isOpened()):
-        if(playing== True):
+        if(playing== True or playing2==True):
             break
         ##############print("while")
         ret, frame = cam.read()
@@ -427,7 +451,7 @@ def face_recognizer():
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('192.168.56.1', 5050))
+    listener.bind(('10.22.1.238', 5050))
     listener.listen(5)
     print('Waiting for connect...')
     #建List
