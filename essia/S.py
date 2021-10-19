@@ -1,3 +1,4 @@
+import os
 from os import truncate
 import numpy as np
 import cv2
@@ -8,12 +9,26 @@ from threading import Timer
 import jpysocket
 import base64
 import time
+# 聿涵區
+import sys
+from sys import platform
+import argparse
+# import imutils
+import glob
+import random
+import math
+import argparse
 i=0
+
+# 憶萱區
+import jieba
+import random
+import json
+
 #編號
 index = 0
-playing = False 
 playing2 = False 
-
+playing = False 
 list =0
 scale =0 
 cam = cv2.VideoCapture(0)
@@ -35,13 +50,13 @@ step 2: classfly 會收到一則client的分類訊息,根據分類去不同副�
         java client要玩遊戲 =>告知unity切換場景
 """
 clients=[]
+yesOrno = "empty"
 cellphone=[]
 imgStatus=[0] * 20
 #分類
 def classfly(client_executor, addr):
     print("welcome to classfy")
     print('Accept new connection from %s:%s...' % addr)
-    
     #收到Client是誰訊息 =>加入聯絡人List
     who_recv = client_executor.recv(1024)
     who = who_recv.decode('utf-8') #我原本用的解碼
@@ -65,6 +80,7 @@ def classfly(client_executor, addr):
         cellphone.insert(index, client_executor)
         print("-----------------------------------cellphone=",cellphone)
         index += 1
+
         #不斷接收client(手機)傳來的訊息
         while True:
             msg = client_executor.recv(1024) 
@@ -74,9 +90,17 @@ def classfly(client_executor, addr):
             print("msg=",msg) ##msg範例 : text;welcome
             print("msg_jpy=",msg_jpy) ##msg範例 : text;welcome
             #將收到的訊息分割 [0]:目標 [1...]:內容
+            global yesOrno
+
             msg_split = msg_jpy.split(";")
             target = msg_split[0]
+            target_msg = msg_split[1]
             print("tagrt=",target)
+            if(len(msg_split) == 3):
+                yesOrno = msg_split[2] 
+            else:
+                yesOrno="empty"
+
             #taget是要傳訊息到看板
             if(target == "text"):
                 text(client_executor,msg_jpy)
@@ -89,14 +113,6 @@ def classfly(client_executor, addr):
                 else:
                     game1(client_executor,msg)
                     #client_executor.send("遊戲即將開始".encode('utf-8'))
-            if(target == "game2"):
-                global playing2 
-                print("game2")
-                if(playing2==True):#已經有人在玩
-                    client_executor.send("sorry, someone playing...".encode('utf-8'))
-                else:
-                    client_executor.send("遊戲即將開始".encode('utf-8'))
-                    game2(client_executor,msg)
             #要辨識人臉
             if(target == "facer"):
                 print("收到手機傳facer")
@@ -119,6 +135,16 @@ def classfly(client_executor, addr):
                     break
             if(target == "pauma"):
                 text(client_executor,msg)
+            if(target == "game2"):
+                global playing2 
+                if(playing2==True):#已經有人在玩
+                    client_executor.send("sorry, someone playing...".encode('utf-8'))
+                else:
+                    client_executor.send("遊戲即將開始".encode('utf-8'))
+                    game2(client_executor,msg)
+            if(target == "chat"):
+                print("chat")
+                chat(client_executor, target_msg, yesOrno)
     elif(who_jpy == "3"):#手機專門傳圖片
         print("who==3+",who)
         # img_index = client_executor.recv(1024) 
@@ -133,12 +159,60 @@ def classfly(client_executor, addr):
         print("不是空/不是unity/不是手機端")
 
 
+##Chat BOT------------------------------
+def chat(client_executor ,msg, sendTo): 
+    random.seed(time.time())
+
+    with open('momo.json',"r",encoding="utf-8") as json_data:
+        dict = json.load(json_data)
+        
+
+    def predictIntent(word_list):
+        for word in word_list:
+            for dictCnt in range(0, len(dict)):
+                for utterance in dict[dictCnt]['utterances']:
+                    if word == utterance:
+                        return dict[dictCnt]['intent']
+
+        return "Unknown Intent"
+
+
+    def Intent2Answer(input_intent):
+        right_intent_dict_index = -1
+        for dictCnt in range(0, len(dict)):
+            if input_intent == dict[dictCnt]['intent']:
+                right_intent_dict_index = dictCnt
+                break
+
+        answerNum = len(dict[right_intent_dict_index]['answers'])
+        return dict[right_intent_dict_index]['answers'][random.randint(0, answerNum-1)]
+    # while True:
+    print("Q:===",msg,"senTo==",sendTo)
+    seg_list = jieba.lcut(msg, cut_all=True)
+
+    # print("|".join(seg_list))
+
+    intent = predictIntent(seg_list)
+    # print(intent)
+
+    answer = Intent2Answer(intent)
+
+    print("回覆: ", answer)
+    client_executor.send(jpysocket.jpyencode(answer))
+    # client_executor.send(answer.encode('utf-8'))
+    answer = "text;"+answer
+    if(sendTo == "yes"):
+        print("yes")
+        text(client_executor, answer)
+    print("-----------------------------")
+    return 
+   
 ###怡君關節點--------------------------------
 def kinect(client_executor):
     print("kinect副函")
     while True:
         recv = client_executor.recv(1024).decode('utf-8')
-        # print("收:"+recv)
+        print("收:"+recv)
         clients[0].send(bytes(recv.encode('utf-8')))
         
 def imgWrite(client_executor):
@@ -181,8 +255,6 @@ def unityRecv(client_executor):
     #img_scale(client_executor)
     print("-----------------開始監聽unity傳來的訊息----------------------")
     global playing 
-    global playing2 
-
     while True:
         recv = client_executor.recv(1024).decode('utf-8')
         recv_split = recv.split(";")
@@ -200,6 +272,19 @@ def unityRecv(client_executor):
             time.sleep(3)
             t_face2 = threading.Thread(target=face)
             t_face2.start()
+# -------------------------------------聿涵區🔻--------------------------------
+def cal_ang(p1, p2, p3):
+    # if p1[0]==0 or p1[1]==0 or p2[0]==0 or p2[1]==0 or p3[0]==0 or p3[1]==0:
+    #     return -1
+
+    vector1 = [p1[0]-p2[0], p1[1]-p2[1]]  # 8-11
+    vector2 = [p3[0]-p2[0], p3[1]-p2[1]]  # 8-14
+    angle = math.atan2(vector2[1], vector2[0]) - \
+        math.atan2(vector1[1], vector1[0])
+    angle = angle/math.pi*180  # change arc to degree
+    # if angle < 0:
+    #    angle= angle + 360
+    return angle
 
 def imgShot():
     print("enter imgshot")
@@ -250,7 +335,6 @@ def game1(client_executor,content):
     print("game1")
     clients[0].send(bytes("game1;".encode('utf-8')))
 
-
 #玩跳舞
 def game2(client_executor,content):
     
@@ -258,13 +342,16 @@ def game2(client_executor,content):
     global playing2 
     playing2 = True
     #傳給看板  e.g: game1
-    clients[0].send(bytes("game2;".encode('utf-8')))
+    clients[0].send(bytes(content.encode('utf-8')))
+
 
 def text(client_executor, content):
-    print("text()中心收到訊息:",content)
+    # print("text()中心收到訊息:",content)
     # #傳給看板 e.g.: text;Welcome
+    # send = "text;" + content
+    print("text()中心收到訊息:",content)
     clients[0].send(bytes(content.encode('utf-8')))
-    client_executor.send("收到".encode('utf-8'))
+    # client_executor.send("收到".encode('utf-8'))
    
 
 def seand_scale():
@@ -350,7 +437,7 @@ def face():
     #開啟鏡頭
     global cam
     print("isopen",cam.isOpened())
-    if(cam.isOpened()==False and playing==False or cam.isOpened()==False and playing2==False):
+    if(cam.isOpened()==False and playing==False or cam.isOpened()==False and playing2==False) :
         print("jump here")
         cam = cv2.VideoCapture(0)
         cam.open(0)
@@ -364,7 +451,7 @@ def face():
     print("後isopen",cam.isOpened())
     #out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (width,height))
     while(cam.isOpened()):
-        if(playing== True or playing2==True):
+        if(playing== True or playing2==True) :
             break
         ##############print("while")
         ret, frame = cam.read()
@@ -451,7 +538,7 @@ def face_recognizer():
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('10.22.1.238', 5050))
+    listener.bind(('192.168.50.21', 5050))
     listener.listen(5)
     print('Waiting for connect...')
     #建List

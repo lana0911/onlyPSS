@@ -15,7 +15,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 idnum = 0
 #設定好與ID號碼對應的使用者名稱，如下，如0對應的就是初始
 
-names = ['初始','Chaeyoung','mina','Nayeon','momo']
+names = ['初始','Chaeyoung','mina','Nayeon','momo','Tzuyu']
 
 #呼叫攝像頭
 # cam = cv2.VideoCapture(0)

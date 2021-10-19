@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
             msg = Encoding.UTF8.GetString(bytes, 0, count);
             //切割
             string[] msg_split = msg.Split(';');
-            Debug.Log("完整" + msg);
+            //Debug.Log("完整" + msg);
             //Debug.Log("msg[0]" + msg_split[0]);
             //Debug.Log("msg[1]" + msg_split[1]);
 
@@ -350,7 +350,7 @@ public class GameManager : MonoBehaviour
     //--UI--跑馬燈
     void pamadan(string content)
     {
-        Debug.Log("PamaDan center = " + content);
+        Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!PamaDan center = " + content);
        
         Debug.Log("Gobal_TCP.text_cnt = " + Gobal_TCP.text_cnt);
         if (Gobal_TCP.text_cnt == now_cnt)

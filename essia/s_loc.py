@@ -75,6 +75,8 @@ def classfly(client_executor, addr):
                 else:
                     client_executor.send("遊戲即將開始".encode('utf-8'))
                     game2(client_executor,msg)
+            if(target == "chat"):
+                print("chat")
     elif(who=="4"):#kinect
         print("收到4")
         kinect(client_executor)
@@ -94,7 +96,7 @@ def unityRecv(client_executor):
     #img_scale(client_executor)
     print("aloha")
     global playing 
-    global playing2 
+    # global playing2 
     while True:
         recv = client_executor.recv(1024).decode('utf-8')
         recv_split = recv.split(";")

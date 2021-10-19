@@ -1,0 +1,21 @@
+[
+    {
+        "intent": "greetings",
+            "utterances": [
+                    "你好",
+                    "嗨"
+                ],
+            "answers": [
+                    "HELLO"
+                ]
+    },
+              {
+                "intent": "eat",
+                 "utterances": [
+                         "吃"
+                     ],
+                 "answers": [
+                         "紫菜～飯卷～♥️"
+                     ]
+             }
+]
