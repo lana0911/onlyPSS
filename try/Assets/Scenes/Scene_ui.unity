@@ -2085,7 +2085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Voice: {fileID: 0}
   VoiceClips: []
-  IP: 192.168.50.21
+  IP: 192.168.1.106
   Port: 5050
   mode_int: 0
 --- !u!1 &1891339759

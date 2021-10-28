@@ -42,7 +42,10 @@ public class Gobal_TCP
     //-------------------------------------------------------------------------------
 
 
-    //-------------------------
+ //關節點-------------------------
+    
+    public static bool handup = false;//舉手跳舞
+
     public static Vector3 leftShoulderPos;
     public static Vector3 leftForeArmPos;
     public static Vector3 leftHandPos;

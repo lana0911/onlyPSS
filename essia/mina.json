@@ -2,11 +2,11 @@
     {
         "intent": "greetings",
             "utterances": [
-                    "你好",
-                    "嗨"
+                    "sayHI",
+                    "HI"
                 ],
             "answers": [
-                    "HELLO(momo)"
+                    "HELLO(mina)"
                 ]
     },
               {
@@ -15,7 +15,7 @@
                          "吃"
                      ],
                  "answers": [
-                         "PIZZA(momo)"
+                         "APPLE~(mina)"
                      ]
              }
 ]

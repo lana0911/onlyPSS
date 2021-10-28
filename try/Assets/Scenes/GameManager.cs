@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     int winner;
 
     static GameManager instance;
-    //TCP socket 多載用
+    //TCP so0cket 多載用
     void Awake()
     {
         if (instance == null)
@@ -139,12 +139,13 @@ public class GameManager : MonoBehaviour
         int im = 1;
         //告知是unity 看板
         client.Send(Encoding.UTF8.GetBytes("1"));
+
         // Thread t_img = new Thread(recvIMG);
         //t_img.Start();
         float dis;
         while (client.Connected)
         {
-       
+
 
             //收到訊息範例 : text;welcome
             var bytes = new byte[1024];
@@ -190,7 +191,14 @@ public class GameManager : MonoBehaviour
                     //Debug.Log("scale收(dis)" + dis);
                     varName.img_dis = dis;
                 }
-                if(msg_split[0] == "k")
+                //(舉手)收到要開始跳舞
+                if (msg_split[0] == "handup")
+                {
+                    Debug.Log("handup!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    Gobal_TCP.handup = true;
+                }
+                ///收關節點資料
+                if (msg_split[0] == "k")
                 {
                     //Debug.Log("關節點" + msg);
                     string[] sArray = msg.Split(';');
