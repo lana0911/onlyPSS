@@ -197,6 +197,14 @@ public class GameManager : MonoBehaviour
                     Debug.Log("handup!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     Gobal_TCP.handup = true;
                 }
+                //收到跳舞分數
+                if (msg_split[0] == "Dcore")
+                {
+                    Debug.Log("Dcore!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    string str  = msg_split[1];
+                    Gobal_TCP.Dcore = (Convert.ToInt32(str));
+                    Debug.Log("Dcore=!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                }
                 ///收關節點資料
                 if (msg_split[0] == "k")
                 {

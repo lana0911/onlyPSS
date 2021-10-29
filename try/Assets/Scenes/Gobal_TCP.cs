@@ -45,6 +45,8 @@ public class Gobal_TCP
  //關節點-------------------------
     
     public static bool handup = false;//舉手跳舞
+    public static bool videoOver = false;//跳舞影片播完
+    public static int Dcore = 0;//跳舞影片播完
 
     public static Vector3 leftShoulderPos;
     public static Vector3 leftForeArmPos;
