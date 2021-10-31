@@ -31,10 +31,17 @@ public class danceControl: MonoBehaviour
     public GameObject Ogood;
     public GameObject Obad;
     public GameObject Onor;
+    public GameObject ready;
+    public GameObject shine;
+    int shin_n = 0;
     void Start()
     {
+        vPlayer.Stop();
         //img
+        //ready.SetActive(false);
         blackBg.SetActive(false);
+        shine.SetActive(false);
+        InvokeRepeating("shining", 0.1f, 0.5f);
         overWord.text = "";
         str_core.text = "";
         show_cnt = 0;
@@ -67,6 +74,9 @@ public class danceControl: MonoBehaviour
         {
             Debug.Log("play!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             mention.text = "";
+            CancelInvoke("shining");
+            shine.SetActive(false);
+            ready.SetActive(false);
             //GetComponent<AudioSource>().Play();
             vPlayer.Play();
             Gobal_TCP.handup = false;
@@ -149,7 +159,21 @@ public class danceControl: MonoBehaviour
             Obad.SetActive(true);
             judge.text = "¦h¦h¥[ªo";
             vbadBg.Play();
-            StartCoroutine(wait(2.5f));
+            StartCoroutine(wait(4.0f));
+        }
+    }
+    void shining ()
+    {
+
+        if(shin_n == 0)
+        {
+            shine.SetActive(true);
+            shin_n = 1;
+        }
+        else
+        {
+            shine.SetActive(false);
+            shin_n = 0;
         }
     }
     IEnumerator wait(float waitTime)
@@ -159,6 +183,7 @@ public class danceControl: MonoBehaviour
         Gobal_TCP.handup = false;
         Gobal_TCP.videoOver = false;
         Gobal_TCP.Dcore = 0;
+        Gobal_TCP.game2Over = true;
         varName.mode = 0;
     }
 }

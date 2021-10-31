@@ -84,6 +84,12 @@ public class GameManager : MonoBehaviour
             //fi = 1;
             varName.game1Over = false;
         }
+        if (Gobal_TCP.game2Over && fi == 0)//告訴server遊戲結束
+        {
+            client.Send(Encoding.UTF8.GetBytes("over2;"));
+            //fi = 1;
+            Gobal_TCP.game2Over = false;
+        }
 
     }
     //建立連線

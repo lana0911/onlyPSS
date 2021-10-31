@@ -293,6 +293,7 @@ def unityRecv(client_executor):
     #img_scale(client_executor)
     print("-----------------開始監聽unity傳來的訊息----------------------")
     global playing 
+    global playing2 
     while True:
         recv = client_executor.recv(1024).decode('utf-8')
         recv_split = recv.split(";")
@@ -310,6 +311,8 @@ def unityRecv(client_executor):
             time.sleep(3)
             t_face2 = threading.Thread(target=face)
             t_face2.start()
+        elif(recv_split[0]=="over2"):
+            playing2 = False
 # -------------------------------------聿涵區🔻--------------------------------
 def cal_ang(p1, p2, p3):
     # if p1[0]==0 or p1[1]==0 or p2[0]==0 or p2[1]==0 or p3[0]==0 or p3[1]==0:

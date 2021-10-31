@@ -40,10 +40,11 @@ public class Gobal_TCP
     public static bool reset = false;
 
     //-------------------------------------------------------------------------------
+    public static bool game2Over = false;
 
 
- //關節點-------------------------
-    
+    //關節點-------------------------
+
     public static bool handup = false;//舉手跳舞
     public static bool videoOver = false;//跳舞影片播完
     public static int Dcore = 0;//跳舞影片播完
