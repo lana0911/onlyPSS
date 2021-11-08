@@ -724,7 +724,7 @@ def face_recognizer():
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('192.168.1.106', 5050))
+    listener.bind(('10.22.3.96', 5050))
     listener.listen(5)
     print('Waiting for connect...')
     #建List

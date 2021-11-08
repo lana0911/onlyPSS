@@ -27,7 +27,7 @@ public class danceControl: MonoBehaviour
     public VideoPlayer vgoodBg; 
     public VideoPlayer vnormalBg; 
     public VideoPlayer vbadBg; 
-    public VideoPlayer vPlayer;
+    //public VideoPlayer vPlayer;
     public GameObject Ogood;
     public GameObject Obad;
     public GameObject Onor;
@@ -36,7 +36,7 @@ public class danceControl: MonoBehaviour
     int shin_n = 0;
     void Start()
     {
-        vPlayer.Stop();
+        //vPlayer.Stop();
         //img
         //ready.SetActive(false);
         blackBg.SetActive(false);
@@ -46,15 +46,15 @@ public class danceControl: MonoBehaviour
         str_core.text = "";
         show_cnt = 0;
         //video
-        vPlayer = GetComponent<VideoPlayer>();
+        //vPlayer = GetComponent<VideoPlayer>();
         vgoodBg = GetComponent<VideoPlayer>();
         vnormalBg = GetComponent<VideoPlayer>();
         vbadBg = GetComponent<VideoPlayer>();
         Ogood.SetActive(false);
         Obad.SetActive(false);
         Onor.SetActive(false);
-        vPlayer.playOnAwake = false;
-        vPlayer.loopPointReached += EndReached;
+        //vPlayer.playOnAwake = false;
+       // vPlayer.loopPointReached += EndReached;
 
     }
     //¼v¤ù¼½§¹
@@ -63,7 +63,7 @@ public class danceControl: MonoBehaviour
         
         Debug.Log("over!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Gobal_TCP.videoOver = true;
-        vPlayer.Stop();
+       // vPlayer.Stop();
 
         loadOver();
     }
@@ -78,8 +78,12 @@ public class danceControl: MonoBehaviour
             shine.SetActive(false);
             ready.SetActive(false);
             //GetComponent<AudioSource>().Play();
-            vPlayer.Play();
+          //  vPlayer.Play();
             Gobal_TCP.handup = false;
+        }
+        if(Gobal_TCP.tu)
+        {
+            loadOver();
         }
     }
     void loadOver()

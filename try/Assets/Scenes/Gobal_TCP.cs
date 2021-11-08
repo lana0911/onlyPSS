@@ -5,7 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Gobal_TCP
 {
-//UI 跑馬燈text -------------------------------------------------------------------------------
+
+    public static bool tu = false;
+    //UI 跑馬燈text -------------------------------------------------------------------------------
     public static string text1 = "";
     public static string text2 = "";
     public static int text_cnt = 0;//兩個輪流showte text

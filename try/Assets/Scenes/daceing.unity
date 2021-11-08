@@ -1057,6 +1057,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6327c229122fa7943bfb38edc262ea1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &782951350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782951346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd6172e002676a4ab01ca821da0446a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playVideo: {fileID: 2100742161}
 --- !u!1 &799095705
 GameObject:
   m_ObjectHideFlags: 0
@@ -2038,7 +2051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Voice: {fileID: 0}
   VoiceClips: []
-  IP: 192.168.1.106
+  IP: 10.22.3.96
   Port: 5050
   mode_int: 0
 --- !u!4 &1394739583
@@ -3256,7 +3269,6 @@ MonoBehaviour:
   vgoodBg: {fileID: 486382111}
   vnormalBg: {fileID: 1805571175}
   vbadBg: {fileID: 1079529671}
-  vPlayer: {fileID: 2100742161}
   Ogood: {fileID: 2074242684}
   Obad: {fileID: 1540681198}
   Onor: {fileID: 1230409376}

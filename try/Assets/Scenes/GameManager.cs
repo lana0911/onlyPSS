@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log("Dcore!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     string str  = msg_split[1];
-                    Gobal_TCP.Dcore = (Convert.ToInt32(str));
+                    //Gobal_TCP.Dcore = (Convert.ToInt32(str));
                     Debug.Log("Dcore=!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
                 ///收關節點資料

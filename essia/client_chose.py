@@ -3,7 +3,7 @@ data=""
 im = "2"
 # 构建一个实例，去连接服务端的监听端口。
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(('192.168.1.106', 5050))
+client.connect(('10.22.3.96', 5050))
 client.send(im.encode('utf-8'))
 # 告知
 #client.send(bytes('client'.encode('utf-8')))
