@@ -88,6 +88,7 @@ public class danceControl: MonoBehaviour
     }
     void loadOver()
     {
+        Debug.log("收到影片結束");
         blackBg.SetActive(true);
         InvokeRepeating("showHide", 0.5f, 0.5f);
     }

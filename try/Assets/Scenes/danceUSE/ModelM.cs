@@ -167,8 +167,11 @@ public class ModelM : MonoBehaviour
 		//text
 		// text = 	.ReadAllLines("D:\\大學\\PoseAd\\pose\\point\\test07.txt");
 		//text = File.ReadAllLines("D:\\大學\\onlyPSS\\onlyPSS\\test110101_1_800.txt");
-		text = File.ReadAllLines("D:\\test110101_1_800.txt");
-
+		//text = File.ReadAllLines("D:\\test110101_1_800.txt");
+		//path修改
+		var path = @"D:\example.txt";
+		var txt = File.ReadAllText(path);
+		Debug.Log(txt);
 		// string path = @"d:\大學\onlyPSS\onlyPSS\\test.txt";
 		// string[] createText = {""};
 		// File.WriteAllLines(path, createText, Encoding.UTF8);
