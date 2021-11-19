@@ -33,6 +33,7 @@ def get_images_and_labels(path):
             continue
 
         #為了獲取id，將圖片和路徑分裂並獲取
+        print(image_path)
         id = int(os.path.split(image_path)[-1].split(".")[1])
         faces = detector.detectMultiScale(img_np)
 

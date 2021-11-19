@@ -24,6 +24,9 @@ i=0
 import jieba
 import random
 import json
+import chatgui
+import os 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 #編號
 index = 0
@@ -63,8 +66,8 @@ def classfly(client_executor, addr):
     #收到Client是誰訊息 =>加入聯絡人List
     who_recv = client_executor.recv(1024)
     who = who_recv.decode('utf-8') #我原本用的解碼
-    who_jpy = who #local run時
-    # who_jpy = jpysocket.jpydecode(who_recv) #jpy解碼
+    # who_jpy = who #local run時
+    who_jpy = jpysocket.jpydecode(who_recv) #jpy解碼
     print("一開始收到的->",who,"-<")
     #-------------------------------------------
     #加入通訊
@@ -85,95 +88,101 @@ def classfly(client_executor, addr):
         # cellphone.insert(index, client_executor)
         print("-----------------------------------cellphone=",cellphone)
         index += 1
-
         #不斷接收client(手機)傳來的訊息
-        while True:
-            msg = client_executor.recv(1024) 
-            # msg_jpy = jpysocket.jpydecode(msg)
-            msg = msg.decode('utf-8')  
-            msg_jpy = msg    #local run時
-            print("開始到")
-            print("msg=",msg) ##msg範例 : text;welcome
-            print("msg_jpy=",msg_jpy) ##msg範例 : text;welcome
-            #將收到的訊息分割 [0]:目標 [1...]:內容
-            global yesOrno
-            global ChatToWho
-            msg_split = msg_jpy.split(";")
-            target = msg_split[0]
-            target_msg = msg_split[1]
-            print("tagrt=",target)
-            #CHAT 要傳是誰 && 要不要給看板
-            if(len(msg_split) == 3):
-                yesOrno = msg_split[2] 
+        # while True:
+        msg = client_executor.recv(1024) 
+        # msg = msg.decode('utf-8')  
+        # msg_jpy = msg    #local run時
+        msg_jpy = jpysocket.jpydecode(msg)
+        print("開始到")
+        print("msg=",msg) ##msg範例 : text;welcome
+        print("msg_jpy=",msg_jpy) ##msg範例 : text;welcome
+        #將收到的訊息分割 [0]:目標 [1...]:內容
+        global yesOrno   #chat; /msg/ yseNO /people
+        global ChatToWho
+        msg_split = msg_jpy.split(";")
+        target = msg_split[0]
+        target_msg = msg_split[1]
+        print("tagrt=",target)
+        #CHAT 要傳是誰 && 要不要給看板
+        if(len(msg_split) == 3):
+            print("msg_split[2]==", msg_split[2])
+            yesOrno = msg_split[2] 
+        else:
+            yesOrno="yes"
+
+        if(len(msg_split) == 4):
+            ChatToWho = msg_split[3] 
+        else:
+            ChatToWho="empty"
+        
+
+
+
+        #測試用
+        if(msg == "handup;"):
+            print("hand")
+            clients[0].send(bytes("handup;".encode('utf-8')))
+            client_executor.send("好喔收到".encode('utf-8'))
+            clients[0].send(bytes("Dcore;99".encode('utf-8')))
+        #測試用
+        if(msg == "Dcore;"):
+            print("Dcore=", msg)
+            clients[0].send(bytes(msg.encode('utf-8')))
+            client_executor.send("好喔收到".encode('utf-8'))
+
+
+
+        #taget是要傳訊息到看板
+        if(target == "text"):
+            text(client_executor,msg_jpy)
+        #game1是要玩猜拳
+        if target == "game1" :
+            print("猜拳")
+            global playing 
+            if(playing==True):#已經有人在玩
+                client_executor.send("sorry, someone playing...".encode('utf-8'))
             else:
-                yesOrno="yes"
-
-            if(len(msg_split) == 4):
-                ChatToWho = msg_split[3] 
+                game1(client_executor,msg)
+                #client_executor.send("遊戲即將開始".encode('utf-8'))
+        #要辨識人臉
+        if(target == "facer"):
+            print("收到手機傳facer")
+            client_executor.send(jpysocket.jpyencode("StartSend"))
+            img_over_str = client_executor.recv(1024) 
+            img_over_str = jpysocket.jpydecode(img_over_str) 
+            #暫停3秒等照片+辨識
+            # time.sleep(5)
+            # print("5秒結束")
+            print("img_over_str=",img_over_str)
+            if(img_over_str == "imgover"):
+                print("status==1")
+                #開始讀檔
+                fa = open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/rec.txt","r")
+                ans = fa.readline()
+                print(ans)
+                client_executor.send(jpysocket.jpyencode(ans))
+                print('send complete')
+                client_executor.close()
+                # break
+        if(target == "pauma"):
+            text(client_executor,msg)
+        if(target == "game2"):
+            global playing2 
+            if(playing2==False):#已經有人在玩
+                print("game2有人在玩")
+                client_executor.send("sorry, someone playing...".encode('utf-8'))
             else:
-                ChatToWho="empty"
-            
-
-
-
-            #測試用
-            if(msg == "handup;"):
-                print("hand")
-                clients[0].send(bytes("handup;".encode('utf-8')))
-                client_executor.send("好喔收到".encode('utf-8'))
-                clients[0].send(bytes("Dcore;99".encode('utf-8')))
-            #測試用
-            if(msg == "Dcore;"):
-                print("Dcore=", msg)
-                clients[0].send(bytes(msg.encode('utf-8')))
-                client_executor.send("好喔收到".encode('utf-8'))
-
-
-
-            #taget是要傳訊息到看板
-            if(target == "text"):
-                text(client_executor,msg_jpy)
-            #game1是要玩猜拳
-            if target == "game1" :
-                print("猜拳")
-                global playing 
-                if(playing==True):#已經有人在玩
-                    client_executor.send("sorry, someone playing...".encode('utf-8'))
-                else:
-                    game1(client_executor,msg)
-                    #client_executor.send("遊戲即將開始".encode('utf-8'))
-            #要辨識人臉
-            if(target == "facer"):
-                print("收到手機傳facer")
-                client_executor.send(jpysocket.jpyencode("StartSend"))
-                img_over_str = client_executor.recv(1024) 
-                img_over_str = jpysocket.jpydecode(img_over_str) 
-                #暫停3秒等照片+辨識
-                # time.sleep(5)
-                # print("5秒結束")
-                print("img_over_str=",img_over_str)
-                if(img_over_str == "imgover"):
-                    print("status==1")
-                    #開始讀檔
-                    fa = open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/rec.txt","r")
-                    ans = fa.readline()
-                    print(ans)
-                    client_executor.send(jpysocket.jpyencode(ans))
-                    print('send complete')
-                    client_executor.close()
-                    break
-            if(target == "pauma"):
-                text(client_executor,msg)
-            if(target == "game2"):
-                global playing2 
-                if(playing2==True):#已經有人在玩
-                    client_executor.send("sorry, someone playing...".encode('utf-8'))
-                else:
-                    client_executor.send("遊戲即將開始".encode('utf-8'))
-                    game2(client_executor,msg_jpy)
-            if(target == "chat"):
-                print("chat")
-                chat(client_executor, target_msg, yesOrno, ChatToWho)
+                client_executor.send("遊戲即將開始".encode('utf-8'))
+                game2(client_executor,msg_jpy)
+        if(target == "chat"):
+            print("chat")
+            t_chat = threading.Thread(target=chatRecv, args=(client_executor,)).start()   
+            # t_chat.start()
+            # chatCheck(client_executor, target_msg, yesOrno, ChatToWho)
+            # chatCheck(client_executor)
+            # chatRecv(client_executor)
+            # chat(client_executor, target_msg, yesOrno, ChatToWho)
     elif(who_jpy == "3"):#手機專門傳圖片
         print("who==3+",who)
         # img_index = client_executor.recv(1024) 
@@ -186,9 +195,63 @@ def classfly(client_executor, addr):
 
     else:
         print("不是空/不是unity/不是手機端")
+def chatRecv(client_executor):
+    print("-----------------開始監聽Chat傳來的訊息----------------------")
+    i=0
+    while(True): 
+        recv = client_executor.recv(1024)
+        str = jpysocket.jpydecode(recv)
+        msg_split = str.split(";")
+        chat = msg_split[0]
+        content = msg_split[1]
+        yesNo = msg_split[2]
+        person = msg_split[3]
+        print("chat=",chat, "content=",content,"yesNo=",yesNo,"person=",person)
+        if(chat == 'chat'):
+            chatCheck(client_executor, content, person, yesNo)
+##Chat BOT(英文版)------------------------------
+def chatCheck(client_executor , content, person, yesNo):
+    # while(True): 
+    #     # str = "測試" 
+    #     who_recv = client_executor.recv(1024) 
+    #     who_jpy = jpysocket.jpydecode(who_recv) #jpy解碼 
+    #     print("收:",who_jpy) 
+    #     # str = input("input:") 
+    #     # client_executor.send(jpysocket.jpyencode(str)) 
+    #     # client_executor.send(str.encode('utf-8')) 
+    #     client_executor.send(bytes("46",encoding = 'utf8'))
+    # #分類給誰
+    # print("進chatBot****************************")
+    # print("content==",content, "person=",person)
+    # client_executor.send(bytes("456",encoding = 'utf8')) 
+    # return
+    # return
 
+    global jsonPath
+    jsonPath = ''
+    if(person=='mina'):
+        jsonPath = 'mina'
+    elif(person=='momo'):
+        jsonPath = 'momo'
+    jsonPath = jsonPath + '.json'
+    ans = chatgui.chatbot_response(content)
+    print("英文ans=",ans)
+    if( ans=="Sorry, can't understand you" or 
+        ans== "Please give me more info" or 
+        ans=="Not sure I understand"
+    ):
+        print("英文版沒答案")
+        chat(client_executor, content, yesNo, person)
+    else:
+        client_executor.send(bytes(ans,encoding = 'utf8'))#給手機
+        answer = "text;" + ans
+        if(yesNo == "yes"):
+            print("yes")
+            text(client_executor, answer) #給看板
+        print("-----------------------------")
+   
 
-##Chat BOT------------------------------
+##Chat BOT(中文版)------------------------------
 def chat(client_executor ,msg, sendTo, ChatToWho):
     #分類給誰
     global jsonPath
@@ -225,7 +288,7 @@ def chat(client_executor ,msg, sendTo, ChatToWho):
         answerNum = len(dict[right_intent_dict_index]['answers'])
         return dict[right_intent_dict_index]['answers'][random.randint(0, answerNum-1)]
     # while True:
-    print("Q:===",msg,"senTo==",sendTo, "msg===",msg, "ChatToWho===",ChatToWho)
+    # print("Q:===",msg,"senTo==",sendTo, "msg===",msg, "ChatToWho===",ChatToWho)
     seg_list = jieba.lcut(msg, cut_all=True)
 
     # print("|".join(seg_list))
@@ -235,9 +298,12 @@ def chat(client_executor ,msg, sendTo, ChatToWho):
 
     answer = Intent2Answer(intent)
 
-    print("回覆: ", answer)
-    client_executor.send(jpysocket.jpyencode(answer))
+    print("中文版回覆: ", answer)
+    # client_executor.send(jpysocket.jpyencode(answer))
     # client_executor.send(answer.encode('utf-8'))
+    # client_executor.send(jpysocket.jpyencode(answer))
+    # client_executor.send(str.encode('utf-8'))# 
+    client_executor.send(bytes(answer,encoding = 'utf8'))
     answer = "text;"+answer
     if(sendTo == "yes"):
         print("yes")
@@ -724,8 +790,8 @@ def face_recognizer():
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('10.22.3.96', 5050))
-    listener.listen(5)
+    listener.bind(('192.168.50.21', 5050))
+    listener.listen(20)
     print('Waiting for connect...')
     #建List
     list_num=0

@@ -1863,7 +1863,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1560631130}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 6b9f33fc2c56a7043ba98d5f4a243742, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 6f40059c77fafaa4798aaf83abe26710, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -2085,7 +2085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Voice: {fileID: 0}
   VoiceClips: []
-  IP: 192.168.1.106
+  IP: 192.168.50.21
   Port: 5050
   mode_int: 0
 --- !u!1 &1891339759
