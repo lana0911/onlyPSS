@@ -52,7 +52,7 @@ step 2: classfly 會收到一則client的分類訊息,根據分類去不同副�
     3. 分類訊息==switch:
         java client要玩遊戲 =>告知unity切換場景
 """
-clients=[]
+clients=['default']
 yesOrno = "yes"
 ChatToWho = "empty"
 jsonPath = 'empty' 
@@ -66,8 +66,15 @@ def classfly(client_executor, addr):
     #收到Client是誰訊息 =>加入聯絡人List
     who_recv = client_executor.recv(1024)
     who = who_recv.decode('utf-8') #我原本用的解碼
-    # who_jpy = who #local run時
-    who_jpy = jpysocket.jpydecode(who_recv) #jpy解碼
+    
+    
+    #////////////////
+    who_jpy = who #local run時
+    # who_jpy = jpysocket.jpydecode(who_recv) #jpy解碼
+    #////////////////
+
+
+
     print("一開始收到的->",who,"-<")
     #-------------------------------------------
     #加入通訊
@@ -76,6 +83,7 @@ def classfly(client_executor, addr):
     if(who=="1"):#unity看板
         print("who==",who)
         clients.append(client_executor)#加入list
+        clients[0]=(client_executor)
         print("--------------------------------------加入=",clients)
         unityRecv(client_executor)#開啟迴圈監聽
     elif(who_jpy=="2" or who == "2"):#手機cliet
@@ -92,8 +100,16 @@ def classfly(client_executor, addr):
         # while True:
         msg = client_executor.recv(1024) 
         # msg = msg.decode('utf-8')  
+       
+       
+       
+        #////////////////
         # msg_jpy = msg    #local run時
         msg_jpy = jpysocket.jpydecode(msg)
+        #////////////////
+        
+        
+        
         print("開始到")
         print("msg=",msg) ##msg範例 : text;welcome
         print("msg_jpy=",msg_jpy) ##msg範例 : text;welcome
@@ -790,7 +806,7 @@ def face_recognizer():
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('192.168.50.21', 5050))
+    listener.bind(('110.40.192.183', 5050))
     listener.listen(20)
     print('Waiting for connect...')
     #建List
