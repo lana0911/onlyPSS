@@ -1,5 +1,7 @@
 
-imgStatus=[0] * 20
-print(imgStatus)
-imgStatus[0] =1 
-print(imgStatus)
+num = 789
+list = ['default']
+list[0]=("1456")
+list[0]=("123")
+list[0]=(num)
+print(list)
