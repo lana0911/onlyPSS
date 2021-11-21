@@ -5,7 +5,7 @@ using System.IO;
 using System;
 
 using UnityEngine.Video;
-//¤Þ¤J®w
+//ï¿½Þ¤Jï¿½w
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -16,16 +16,16 @@ using System.Threading;
 public class ModelM : MonoBehaviour
 {
 
-	//¥H¤U¹w³]³£¬O¨p¦³ªº¦¨­û
-	Socket serverSocket; //¦øªA¾¹ºÝsocket
-	Socket clientSocket; //«È¤áºÝsocket
-	IPEndPoint ipEnd; //°»Å¥°ð
-	string recvStr; //±µ¦¬ªº¦r¦ê
-	string sendStr; //¶Ç°eªº¦r¦ê
-	byte[] recvData = new byte[1024]; //±µ¦¬ªº¸ê®Æ¡A¥²¶·¬°¦ì¤¸²Õ
-	byte[] sendData = new byte[1024]; //¶Ç°eªº¸ê®Æ¡A¥²¶·¬°¦ì¤¸²Õ
-	int recvLen; //±µ¦¬ªº¸ê®Æªø«×
-	Thread connectThread, videoThread; //³s½u°õ¦æºü
+	//ï¿½Hï¿½Uï¿½wï¿½]ï¿½ï¿½ï¿½Oï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	Socket serverSocket; //ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½socket
+	Socket clientSocket; //ï¿½È¤ï¿½ï¿½socket
+	IPEndPoint ipEnd; //ï¿½ï¿½Å¥ï¿½ï¿½
+	string recvStr; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rï¿½ï¿½
+	string sendStr; //ï¿½Ç°eï¿½ï¿½ï¿½rï¿½ï¿½
+	byte[] recvData = new byte[1024]; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì¤¸ï¿½ï¿½
+	byte[] sendData = new byte[1024]; //ï¿½Ç°eï¿½ï¿½ï¿½ï¿½Æ¡Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì¤¸ï¿½ï¿½
+	int recvLen; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æªï¿½ï¿½ï¿½
+	Thread connectThread, videoThread; //ï¿½sï¿½uï¿½ï¿½ï¿½ï¿½ï¿½
 
 	// Start is called before the first frame update
 	GameObject camera;
@@ -73,7 +73,7 @@ public class ModelM : MonoBehaviour
 	}
 
 
-	//¦øªA
+	//ï¿½ï¿½ï¿½A
 	void Start()
 	{
 
@@ -129,7 +129,7 @@ public class ModelM : MonoBehaviour
 		rightupLeg = GameObject.Find("Character1_RightUpLeg");
 
 		//video GameObject.FindGameObjectsWithTag("NPC");
-		playVideo = GetComponent<VideoPlayer>();
+		// playVideo = GetComponent<VideoPlayer>();
 		//playVideo = GameObject.FindGameObjectsWithTag("MV").GetComponent<VideoPlayer>();
 		playVideo.Stop();
 
@@ -165,14 +165,14 @@ public class ModelM : MonoBehaviour
 		int badcheck = 0;
 
 		//text
-		// text = 	.ReadAllLines("D:\\¤j¾Ç\\PoseAd\\pose\\point\\test07.txt");
-		//text = File.ReadAllLines("D:\\¤j¾Ç\\onlyPSS\\onlyPSS\\test110101_1_800.txt");
+		// text = 	.ReadAllLines("D:\\ï¿½jï¿½ï¿½\\PoseAd\\pose\\point\\test07.txt");
+		text = File.ReadAllLines("D:onlyPSS\\test110101_1_800.txt");
 		//text = File.ReadAllLines("D:\\test110101_1_800.txt");
-		//path­×§ï
-		var path = @"D:\example.txt";
-		var txt = File.ReadAllText(path);
-		Debug.Log(txt);
-		// string path = @"d:\¤j¾Ç\onlyPSS\onlyPSS\\test.txt";
+		//pathï¿½×§ï¿½
+		// var path = @"D:\example.txt";
+		// var txt = File.ReadAllText(path);
+		// Debug.Log(txt);
+		// string path = @"d:\ï¿½jï¿½ï¿½\onlyPSS\onlyPSS\\test.txt";
 		// string[] createText = {""};
 		// File.WriteAllLines(path, createText, Encoding.UTF8);
 		// Fil.WriteLine("test");
@@ -295,6 +295,7 @@ public class ModelM : MonoBehaviour
 		rotation = Quaternion.LookRotation(rightLegPos - rightupLegPos, Vector3.forward);
 		rightupLeg.transform.rotation = rotation * opred;
 		rotation = Quaternion.LookRotation(rightFootPos - rightLegPos, Vector3.forward);
+		
 		rightLeg.transform.rotation = rotation * opred;
 
 
@@ -305,7 +306,6 @@ public class ModelM : MonoBehaviour
 			tesFlag = 1;
 			Gobal_TCP.handup = true;
 		}
-
 		if (tesFlag == 1 && Gobal_video.status == 0)
 		{
 			//videoThread = new Thread(new ThreadStart(playVideo.Play));
@@ -335,7 +335,6 @@ public class ModelM : MonoBehaviour
 
 				// print(text[txtCount].Substring(2,9));
 				print("count: " + txtCount);
-				print(text);
 
 				int a, b;
 				a = 2;

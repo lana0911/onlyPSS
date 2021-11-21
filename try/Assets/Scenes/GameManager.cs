@@ -29,8 +29,12 @@ public class GameManager : MonoBehaviour
     int now_cnt = Gobal_TCP.text_cnt;
     int winner;
 
+    //file text write
+    string path = @"d:\å¤§å­¸\onlyPSS\onlyPSS\\test1.txt";
+	string[] createText = {""};
+
     static GameManager instance;
-    //TCP so0cket ¦h¸ü¥Î
+    //TCP so0cket ï¿½hï¿½ï¿½ï¿½ï¿½
     void Awake()
     {
         if (instance == null)
@@ -42,7 +46,7 @@ public class GameManager : MonoBehaviour
         else if (this != instance && instance != null)
         {
             string ScenName = SceneManager.GetActiveScene().name;
-            Debug.Log("§R°£" + ScenName + "ªº" + name);
+            Debug.Log("ï¿½Rï¿½ï¿½" + ScenName + "ï¿½ï¿½" + name);
             Destroy(gameObject);
         }
 
@@ -50,10 +54,10 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// ////////////////////////////////////////////////////////
     /// </summary>
-    //±Nserver¤º®e§ó·s¤W¥h
+    //ï¿½Nserverï¿½ï¿½ï¿½eï¿½ï¿½sï¿½Wï¿½h
     void Update()
     {
-        /*//³õ´º¤Á´«
+        /*//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (Gobal_TCP.game_mode == 0)
         {
             SceneManager.LoadScene(0);
@@ -69,22 +73,22 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(2);
             Debug.Log("switch Sence 2 (Dance Game)");
         }*/
-        //±½´y°Å¤M¥ÛÀY¥¬
+        //ï¿½ï¿½ï¿½yï¿½Å¤Mï¿½ï¿½ï¿½Yï¿½ï¿½
         if (varName.cnt_end)
         {
-            //§i¶Dserver¥i¥H±½
+            //ï¿½iï¿½Dserverï¿½iï¿½Hï¿½ï¿½
             client.Send(Encoding.UTF8.GetBytes("shot;"));
             varName.cnt_end = false;
 
 
         }
-        if (varName.game1Over && fi==0)//§i¶Dserver¹CÀ¸µ²§ô
+        if (varName.game1Over && fi==0)//ï¿½iï¿½Dserverï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             client.Send(Encoding.UTF8.GetBytes("over;"));
             //fi = 1;
             varName.game1Over = false;
         }
-        if (Gobal_TCP.game2Over && fi == 0)//§i¶Dserver¹CÀ¸µ²§ô
+        if (Gobal_TCP.game2Over && fi == 0)//ï¿½iï¿½Dserverï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             client.Send(Encoding.UTF8.GetBytes("over2;"));
             //fi = 1;
@@ -92,7 +96,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    //«Ø¥ß³s½u
+    //ï¿½Ø¥ß³sï¿½u
     void Start()
     {
         Debug.Log("hi" + i);
@@ -115,21 +119,21 @@ public class GameManager : MonoBehaviour
             var count = client.Receive(bytes);
             float dis;
             msg = Encoding.UTF8.GetString(bytes, 0, count);
-            //¤Á³Î scale;123456
+            //ï¿½ï¿½ï¿½ï¿½ scale;123456
             string[] msg_split = msg.Split(';');
-            //Debug.Log("§¹¾ã" + msg);
+            //Debug.Log("ï¿½ï¿½ï¿½ï¿½" + msg);
            // Debug.Log("msg[0]" + msg_split[0]);
             //Debug.Log("msg[1]" + msg_split[1]);
 
 
             if (msg != null)
             {
-                //±µ¦¬¨ìopenpose ªº ¦^¶Ç¸ê®Æ
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½openpose ï¿½ï¿½ ï¿½^ï¿½Ç¸ï¿½ï¿½
                 if (msg_split[0] == "scale")
                 {
-                    //Debug.Log("scale¦¬" + msg_split[1]);
+                    //Debug.Log("scaleï¿½ï¿½" + msg_split[1]);
                     dis = (Convert.ToInt32(msg_split[1]));
-                    //Debug.Log("scale¦¬(dis)" + dis);
+                    //Debug.Log("scaleï¿½ï¿½(dis)" + dis);
                     varName.img_dis = dis;
                 }
 
@@ -139,11 +143,11 @@ public class GameManager : MonoBehaviour
         }
        
     }*/
-    //°j°é¦¬¸ê®Æ
+    //ï¿½jï¿½é¦¬ï¿½ï¿½ï¿½
     void recvData()
     {
         int im = 1;
-        //§iª¾¬Ounity ¬ÝªO
+        //ï¿½iï¿½ï¿½ï¿½Ounity ï¿½ÝªO
         client.Send(Encoding.UTF8.GetBytes("1"));
 
         // Thread t_img = new Thread(recvIMG);
@@ -153,13 +157,13 @@ public class GameManager : MonoBehaviour
         {
 
 
-            //¦¬¨ì°T®§½d¨Ò : text;welcome
+            //ï¿½ï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½dï¿½ï¿½ : text;welcome
             var bytes = new byte[1024];
             var count = client.Receive(bytes);
             msg = Encoding.UTF8.GetString(bytes, 0, count);
-            //¤Á³Î
+            //ï¿½ï¿½ï¿½ï¿½
             string[] msg_split = msg.Split(';');
-            //Debug.Log("§¹¾ã" + msg);
+            //Debug.Log("ï¿½ï¿½ï¿½ï¿½" + msg);
             //Debug.Log("msg[0]" + msg_split[0]);
             //Debug.Log("msg[1]" + msg_split[1]);
 
@@ -172,38 +176,38 @@ public class GameManager : MonoBehaviour
                 }
                 else if(msg_split[0] == "game1")
                 {
-                    Debug.Log("¦¬¨ìgame1");
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½game1");
                     loadToPSS();
                 }
                 else if (msg_split[0] == "game2")
                 {
-                    Debug.Log("¦¬¨ìgame2");
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½game2");
                     loadToDance();
                 }
 
-                //±µ¦¬¨ìopenpose ªº ¦^¶Ç¸ê®Æ
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½openpose ï¿½ï¿½ ï¿½^ï¿½Ç¸ï¿½ï¿½
                 if (msg_split[0]=="pose")
                 {
-                    Debug.Log("Scanµ²ªG" + msg_split[1]);
-                    //±Ò°Êmodel°µ«ü©w°Ê§@
+                    Debug.Log("Scanï¿½ï¿½ï¿½G" + msg_split[1]);
+                    //ï¿½Ò°ï¿½modelï¿½ï¿½ï¿½ï¿½ï¿½wï¿½Ê§@
                     
-                    //§PÂ_¿éÄ¹
+                    //ï¿½Pï¿½_ï¿½ï¿½Ä¹
                     whoWin(msg_split[1]);
                 }                
                 if (msg_split[0] == "scale")
                 {
-                    //Debug.Log("scale¦¬" + msg_split[1]);
+                    //Debug.Log("scaleï¿½ï¿½" + msg_split[1]);
                     dis = (Convert.ToInt32(msg_split[1]));
-                    //Debug.Log("scale¦¬(dis)" + dis);
+                    //Debug.Log("scaleï¿½ï¿½(dis)" + dis);
                     varName.img_dis = dis;
                 }
-                //(Á|¤â)¦¬¨ì­n¶}©l¸õ»R
+                //(ï¿½|ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½nï¿½}ï¿½lï¿½ï¿½ï¿½R
                 if (msg_split[0] == "handup")
                 {
                     Debug.Log("handup!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     Gobal_TCP.handup = true;
                 }
-                //¦¬¨ì¸õ»R¤À¼Æ
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½ï¿½
                 if (msg_split[0] == "Dcore")
                 {
                     Debug.Log("Dcore!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -211,10 +215,19 @@ public class GameManager : MonoBehaviour
                     //Gobal_TCP.Dcore = (Convert.ToInt32(str));
                     Debug.Log("Dcore=!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
-                ///¦¬Ãö¸`ÂI¸ê®Æ
+                ///ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Iï¿½ï¿½ï¿½
                 if (msg_split[0] == "k")
                 {
-                    //Debug.Log("Ãö¸`ÂI" + msg);
+                    //file text write
+                    if(Gobal_video.status == 1 && Gobal_video.timeFlag == 1) {
+                        string appendText = msg + Environment.NewLine;
+                        // print(msg);
+                        File.AppendAllText(path, appendText, Encoding.UTF8);
+                        Gobal_video.timeFlag = 0;
+                        // print("gameManage second");
+                    }
+
+                    //Debug.Log("ï¿½ï¿½ï¿½`ï¿½I" + msg);
                     string[] sArray = msg.Split(';');
                     Gobal_TCP.leftShoulderPos.x = float.Parse(sArray[1]);
                     Gobal_TCP.leftShoulderPos.y = float.Parse(sArray[2]);
@@ -279,7 +292,7 @@ public class GameManager : MonoBehaviour
 
         }
     }
-    ////§PÂ_¿éÄ¹
+    ////ï¿½Pï¿½_ï¿½ï¿½Ä¹
     void whoWin(string pose)
     {
         //1st: player 2nd:model
@@ -288,74 +301,74 @@ public class GameManager : MonoBehaviour
         string model = P[1] ;
         
         
-        //winner : 0=¥­¤â, 1=model, 2=player
-        //model¥X°Å¤M
+        //winner : 0=ï¿½ï¿½ï¿½ï¿½, 1=model, 2=player
+        //modelï¿½Xï¿½Å¤M
         if (model == "1")
         {
-            varName.modelPose = "°Å¤M Scissor";
+            varName.modelPose = "ï¿½Å¤M Scissor";
             if (player == "1")
             {
-                varName.playerPose = "°Å¤M Scissor";
+                varName.playerPose = "ï¿½Å¤M Scissor";
                 varName.winner = 0;
             }
                 
             else if (player == "2")
             {
                 varName.winner = 2;
-                varName.playerPose = "¥ÛÀY Stone";
+                varName.playerPose = "ï¿½ï¿½ï¿½Y Stone";
 
             }
             else
             {
                 varName.winner = 1;
-                varName.playerPose = "¥¬ Paper";
+                varName.playerPose = "ï¿½ï¿½ Paper";
 
             }
         }
-        //model¥X¥ÛÀY
+        //modelï¿½Xï¿½ï¿½ï¿½Y
         else if (model == "2")
         {
-            varName.modelPose = "¥ÛÀY Stone";
+            varName.modelPose = "ï¿½ï¿½ï¿½Y Stone";
             if (player == "1")
             {
                 varName.winner = 1;
-                varName.playerPose = "°Å¤M Scissor";
+                varName.playerPose = "ï¿½Å¤M Scissor";
 
             }
             else if (player == "2")
             { 
                 varName.winner = 0;
-                varName.playerPose = "¥ÛÀY Stone";
+                varName.playerPose = "ï¿½ï¿½ï¿½Y Stone";
             }
             else
             {
                 varName.winner = 2;
-                varName.playerPose = "¥¬ Paper";
+                varName.playerPose = "ï¿½ï¿½ Paper";
             }
         }
-        //model¥X¥¬
+        //modelï¿½Xï¿½ï¿½
         else if (model == "3")
         {
-            varName.modelPose = "¥¬ Paper";
+            varName.modelPose = "ï¿½ï¿½ Paper";
             if (player == "1")
             {
                 varName.winner = 2;
-                varName.playerPose = "°Å¤M Scissor";
+                varName.playerPose = "ï¿½Å¤M Scissor";
             }
             else if (player == "2")
             {
                 varName.winner = 1;
-                varName.playerPose = "¥ÛÀY Stone";
+                varName.playerPose = "ï¿½ï¿½ï¿½Y Stone";
             }
             else
             {
                 varName.winner = 0;
-                varName.playerPose = "¥¬ Paper";
+                varName.playerPose = "ï¿½ï¿½ Paper";
 
             }
         }
         Debug.Log("winner=" + varName.winner);
-        //1.Åýmodel°µ«ü©w°Ê§@
+        //1.ï¿½ï¿½modelï¿½ï¿½ï¿½ï¿½ï¿½wï¿½Ê§@
         varName.model_start_animation = true;
 
 
@@ -369,7 +382,7 @@ public class GameManager : MonoBehaviour
     {
         varName.mode = 2;
     }
-    //--UI--¶]°¨¿O
+    //--UI--ï¿½]ï¿½ï¿½ï¿½O
     void pamadan(string content)
     {
         Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!PamaDan center = " + content);
