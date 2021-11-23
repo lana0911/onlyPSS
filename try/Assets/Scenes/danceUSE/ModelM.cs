@@ -52,7 +52,7 @@ public class ModelM : MonoBehaviour
 	private string[] text;
 
 	int video_start;
-	int txtCount = 1;
+	int txtCount = 0;
 	int tesFlag = 0;
 
 	//score1101
@@ -166,7 +166,7 @@ public class ModelM : MonoBehaviour
 
 		//text
 		// text = 	.ReadAllLines("D:\\�j��\\PoseAd\\pose\\point\\test07.txt");
-		text = File.ReadAllLines("D:onlyPSS\\test110101_1_800.txt");
+		text = File.ReadAllLines("D:\\大學\\onlyPSS1120\\onlyPSS\\test110101_1_800.txt");
 		//text = File.ReadAllLines("D:\\test110101_1_800.txt");
 		//path�ק�
 		// var path = @"D:\example.txt";
@@ -333,8 +333,8 @@ public class ModelM : MonoBehaviour
 				second = DateTime.Now.Second;
 				Gobal_video.timeFlag = 1;
 
-				// print(text[txtCount].Substring(2,9));
 				print("count: " + txtCount);
+				// print(text[txtCount]);
 
 				int a, b;
 				a = 2;
@@ -342,21 +342,21 @@ public class ModelM : MonoBehaviour
 				{
 
 					b = (text[txtCount].Substring(a, 1) == "-") ? 9 : 8;
-					if (Mathf.Abs(float.Parse(text[txtCount].Substring(a, b)) - vectorArray[i].x) < 0.10f)
+					if (Mathf.Abs(float.Parse(text[txtCount].Substring(a, b)) - vectorArray[i].x) < 0.05f)
 					{
 						score++;
 					}
 					a = a + b + 1;
 
 					b = (text[txtCount].Substring(a, 1) == "-") ? 9 : 8;
-					if (Mathf.Abs(float.Parse(text[txtCount].Substring(a, b)) - vectorArray[i].y) < 0.10f)
+					if (Mathf.Abs(float.Parse(text[txtCount].Substring(a, b)) - vectorArray[i].y) < 0.05f)
 					{
 						score++;
 					}
 					a = a + b + 1;
 
 					b = (text[txtCount].Substring(a, 1) == "-") ? 9 : 8;
-					if (Mathf.Abs(float.Parse(text[txtCount].Substring(a, b)) - vectorArray[i].z) < 0.10f)
+					if (Mathf.Abs(float.Parse(text[txtCount].Substring(a, b)) - vectorArray[i].z) < 0.05f)
 					{
 						score++;
 					}
@@ -375,7 +375,8 @@ public class ModelM : MonoBehaviour
 				Gobal_video.status = 0;
 				Gobal_TCP.tu = true;
 				tesFlag = 0;
-				txtCount = 1;
+				txtCount = 0;
+				score = 0;
 			}
 		}
 

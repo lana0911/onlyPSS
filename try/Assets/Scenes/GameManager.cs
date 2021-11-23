@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 
             if (msg != null)
             {
-                //������openpose �� �^�Ǹ��
+                //������openpose �� �^�Ǹ�ￄ1�7
                 if (msg_split[0] == "scale")
                 {
                     //Debug.Log("scale��" + msg_split[1]);
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
         }
        
     }*/
-    //�j�馬���
+    //�j�馬��ￄ1�7
     void recvData()
     {
         int im = 1;
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
                     loadToDance();
                 }
 
-                //������openpose �� �^�Ǹ��
+                //������openpose �� �^�Ǹ�ￄ1�7
                 if (msg_split[0]=="pose")
                 {
                     Debug.Log("Scan���G" + msg_split[1]);
@@ -215,7 +215,7 @@ public class GameManager : MonoBehaviour
                     //Gobal_TCP.Dcore = (Convert.ToInt32(str));
                     Debug.Log("Dcore=!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
-                ///�����`�I���
+                ///�����`�I��ￄ1�7
                 if (msg_split[0] == "k")
                 {
                     //file text write
@@ -280,9 +280,9 @@ public class GameManager : MonoBehaviour
                     Gobal_TCP.rightFootPos.z = float.Parse(sArray[45]);
 
                     //print("Gobal_TCP.leftShoulderPos" + Gobal_TCP.leftShoulderPos);
-                    print("Gobal_TCP.leftForeArmPos" + Gobal_TCP.leftForeArmPos);
-                    print("Gobal_TCP.rightFootPos" + Gobal_TCP.rightFootPos);
-                    print("Gobal_TCP.leftFootPos" + Gobal_TCP.leftFootPos);
+                    // print("Gobal_TCP.leftForeArmPos" + Gobal_TCP.leftForeArmPos);
+                    // print("Gobal_TCP.rightFootPos" + Gobal_TCP.rightFootPos);
+                    // print("Gobal_TCP.leftFootPos" + Gobal_TCP.leftFootPos);
                 }
 
             }else
