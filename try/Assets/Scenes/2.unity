@@ -1311,7 +1311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754532092}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 5.09}
+  m_LocalPosition: {x: 0, y: 0, z: 5.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1941,8 +1941,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1136431208}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.13, y: 0.1329, z: 4.29}
-  m_LocalScale: {x: 6.337705, y: 6.06814, z: 1}
+  m_LocalPosition: {x: -0.016, y: -0.016, z: 4.29}
+  m_LocalScale: {x: 2.536, y: 2.536, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 13
@@ -3243,7 +3243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Voice: {fileID: 0}
   VoiceClips: []
-  IP: 10.22.2.115
+  IP: 10.22.3.17
   Port: 5050
   mode_int: 0
 --- !u!4 &1811921272

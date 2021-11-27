@@ -25,7 +25,7 @@ names = ['初始','Chaeyoung','mina','Nayeon','momo','Tzuyu']
 while True:
     # ret,img = cam.read()
     
-    img = cv2.imread("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/pic_2_sucess.jpg")
+    img = cv2.imread("pic_2_sucess.jpg")
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     #識別人臉
     faces = face_cascade.detectMultiScale(
@@ -50,7 +50,7 @@ while True:
         #輸出檢驗結果以及使用者名稱
         cv2.putText(img,str(idum),(x+5,y-5),font,1,(0,0,255),1)
         # cv2.putText(img,str(confidence),(x+5,y+h-5),font,1,(0,0,0),1)
-        f = open('C:/Users/Lana/Documents/GitHub/onlyPSS/essia/rec.txt','w')
+        f = open('rec.txt','w')
         f.write(str(idum))
         #展示結果
         cv2.imshow('camera',img)

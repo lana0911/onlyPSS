@@ -20,15 +20,15 @@ def imgs(client_executor):
             break
         else:
             rec_d = rec_d + data
-    path = 'C:/Users/Lana/Documents/GitHub/onlyPSS/essia/d.txt'
+    path = 'd.txt'
     f = open(path, 'w')
     f.write(str(rec_d))
     f.close()
     #轉成圖片檔
-    with open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/d.txt","r") as f:
+    with open("d.txt","r") as f:
         img = base64.b64decode(f.read()[1:])
         print(type(f.read()))
-        fh = open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/pic_2_sucess.jpg","wb")
+        fh = open("pic_2_sucess.jpg","wb")
         fh.write(img)
         fh.close()
     time.sleep(1)
@@ -56,7 +56,7 @@ def classfly(client_executor, addr):
             time.sleep(5)
             print("5秒結束")
             #開始讀檔
-            fa = open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/rec.txt","r")
+            fa = open("rec.txt","r")
             ans = fa.readline()
             print(ans)
             client_executor.send(jpysocket.jpyencode(ans))

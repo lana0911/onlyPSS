@@ -174,7 +174,7 @@ def classfly(client_executor, addr):
             if(img_over_str == "imgover"):
                 print("status==1")
                 #開始讀檔
-                fa = open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/rec.txt","r")
+                fa = open("rec.txt","r")
                 ans = fa.readline()
                 print(ans)
                 client_executor.send(jpysocket.jpyencode(ans))
@@ -347,16 +347,16 @@ def imgWrite(client_executor):
             rec_d = rec_d + data
             # print(rec_d)
     print("break")
-    path = 'C:/Users/Lana/Documents/GitHub/onlyPSS/essia/d.txt'
+    path = 'd.txt'
     f = open(path, 'w')
     f.write(str(rec_d))
     f.close()
     print("ok1")
     #轉成圖片檔
-    with open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/d.txt","r") as f:
+    with open("d.txt","r") as f:
         img = base64.b64decode(f.read()[1:])
         print(type(f.read()))
-        fh = open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/pic_2_sucess.jpg","wb")
+        fh = open("pic_2_sucess.jpg","wb")
         fh.write(img)
         fh.close()
     print("ok2")
@@ -514,7 +514,7 @@ def imgShot():
             elif ang <= -17:
                 uans = "up"
                 user = 3
-            elif ang < -3:
+            elif ang < -2:
                 uans = "ust"
                 user = 2
             else:
@@ -631,7 +631,7 @@ def seand_scale():
         scale_send = "scale; "+ str(scale)
        # print("scale_send=",scale_send)
         if(len(clients)==0):
-            # print("none")
+            print("none")
             n=2
         else:
             # print("yes")
@@ -769,7 +769,7 @@ def face_recognizer():
     while True:
         # ret,img = cam.read()
         
-        img = cv2.imread("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/pic_2_sucess.jpg")
+        img = cv2.imread("pic_2_sucess.jpg")
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         #識別人臉
         faces = face_cascade.detectMultiScale(
@@ -794,7 +794,7 @@ def face_recognizer():
             #輸出檢驗結果以及使用者名稱
             cv2.putText(img,str(idum),(x+5,y-5),font,1,(0,0,255),1)
             # cv2.putText(img,str(confidence),(x+5,y+h-5),font,1,(0,0,0),1)
-            f = open('C:/Users/Lana/Documents/GitHub/onlyPSS/essia/rec.txt','w')
+            f = open('rec.txt','w')
             f.write(str(idum))
             #展示結果
             cv2.imshow('camera',img)
@@ -806,7 +806,7 @@ def face_recognizer():
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('110.40.192.183', 5050))
+    listener.bind(('10.22.3.17', 5050))
     listener.listen(20)
     print('Waiting for connect...')
     #建List
