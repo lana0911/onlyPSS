@@ -52,7 +52,7 @@ step 2: classfly 會收到一則client的分類訊息,根據分類去不同副�
     3. 分類訊息==switch:
         java client要玩遊戲 =>告知unity切換場景
 """
-clients=['default']
+clients=[]
 yesOrno = "yes"
 ChatToWho = "empty"
 jsonPath = 'empty' 
@@ -69,8 +69,8 @@ def classfly(client_executor, addr):
     
     
     #////////////////
-    who_jpy = who #local run時
-    # who_jpy = jpysocket.jpydecode(who_recv) #jpy解碼
+    # who_jpy = who #local run時
+    who_jpy = jpysocket.jpydecode(who_recv) #jpy解碼
     #////////////////
 
 
@@ -174,7 +174,7 @@ def classfly(client_executor, addr):
             if(img_over_str == "imgover"):
                 print("status==1")
                 #開始讀檔
-                fa = open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/rec.txt","r")
+                fa = open("rec.txt","r")
                 ans = fa.readline()
                 print(ans)
                 client_executor.send(jpysocket.jpyencode(ans))
@@ -341,22 +341,23 @@ def imgWrite(client_executor):
     print("副函")
     while True:
         data = client_executor.recv(BUFSIZ)
+        print(data)
         if not data or len(data) == 0:
             break
         else:
             rec_d = rec_d + data
             # print(rec_d)
     print("break")
-    path = 'C:/Users/Lana/Documents/GitHub/onlyPSS/essia/d.txt'
+    path = 'd.txt'
     f = open(path, 'w')
     f.write(str(rec_d))
     f.close()
     print("ok1")
     #轉成圖片檔
-    with open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/d.txt","r") as f:
+    with open("d.txt","r") as f:
         img = base64.b64decode(f.read()[1:])
         print(type(f.read()))
-        fh = open("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/pic_2_sucess.jpg","wb")
+        fh = open("pic_2_sucess.jpg","wb")
         fh.write(img)
         fh.close()
     print("ok2")
@@ -514,7 +515,7 @@ def imgShot():
             elif ang <= -17:
                 uans = "up"
                 user = 3
-            elif ang < -3:
+            elif ang < -2:
                 uans = "ust"
                 user = 2
             else:
@@ -579,6 +580,7 @@ def imgShot2():
     print("ans=",ans)
     if(pose != ""):
         clients[0].send(bytes(ans.encode('utf-8')))
+    # print("imgShot2")
 
 # def img_scale(client_executor) :
 #     setting(client_executor, addr)
@@ -639,7 +641,7 @@ def seand_scale():
                 clients[0].send(bytes(scale_send.encode('utf-8')))
         time.sleep(0.5)
 def Getface(image):
-    #print("enter getface")
+    print("enter getface")
     global scale
     list = 0
     cnt = 0
@@ -698,6 +700,7 @@ def Getface(image):
         cv2.putText(image, text, (x+5,y+5), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 1,cv2.LINE_AA)
         cv2.putText(image, who, (x-10,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0,0 ), 1,cv2.LINE_AA)
     return image
+    # print("getface")
 def face():
     global playing
     global playing2
@@ -769,7 +772,7 @@ def face_recognizer():
     while True:
         # ret,img = cam.read()
         
-        img = cv2.imread("C:/Users/Lana/Documents/GitHub/onlyPSS/essia/pic_2_sucess.jpg")
+        img = cv2.imread("pic_2_sucess.jpg")
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         #識別人臉
         faces = face_cascade.detectMultiScale(
@@ -794,7 +797,7 @@ def face_recognizer():
             #輸出檢驗結果以及使用者名稱
             cv2.putText(img,str(idum),(x+5,y-5),font,1,(0,0,255),1)
             # cv2.putText(img,str(confidence),(x+5,y+h-5),font,1,(0,0,0),1)
-            f = open('C:/Users/Lana/Documents/GitHub/onlyPSS/essia/rec.txt','w')
+            f = open('rec.txt','w')
             f.write(str(idum))
             #展示結果
             cv2.imshow('camera',img)
@@ -806,7 +809,7 @@ def face_recognizer():
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('110.40.192.183', 5050))
+    listener.bind(('192.168.2.102', 5555))
     listener.listen(20)
     print('Waiting for connect...')
     #建List
