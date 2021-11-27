@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 
             if (msg != null)
             {
-                //锟斤拷锟斤拷锟斤拷openpose 锟斤拷 锟絕锟角革拷锟�
+                //锟斤拷锟斤拷锟斤拷openpose 锟斤拷 锟絕锟角革拷锟??
                 if (msg_split[0] == "scale")
                 {
                     //Debug.Log("scale锟斤拷" + msg_split[1]);
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
         }
        
     }*/
-    //锟絡锟介Μ锟斤拷锟�
+    //锟絡锟介Μ锟斤拷锟??
     void recvData()
     {
         int im = 1;
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
                     loadToDance();
                 }
 
-                //锟斤拷锟斤拷锟斤拷openpose 锟斤拷 锟絕锟角革拷锟�
+                //锟斤拷锟斤拷锟斤拷openpose 锟斤拷 锟絕锟角革拷锟??
                 if (msg_split[0]=="pose")
                 {
                     Debug.Log("Scan锟斤拷锟紾" + msg_split[1]);
@@ -215,7 +215,7 @@ public class GameManager : MonoBehaviour
                     //Gobal_TCP.Dcore = (Convert.ToInt32(str));
                     Debug.Log("Dcore=!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
-                ///锟斤拷锟斤拷锟絗锟絀锟斤拷锟�
+                ///锟斤拷锟斤拷锟絗锟絀锟斤拷锟??
                 if (msg_split[0] == "k")
                 {
                     //file text write

@@ -633,7 +633,7 @@ def seand_scale():
         scale_send = "scale; "+ str(scale)
        # print("scale_send=",scale_send)
         if(len(clients)==0):
-            # print("none")
+            print("none")
             n=2
         else:
             # print("yes")
