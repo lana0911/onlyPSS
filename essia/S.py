@@ -159,6 +159,7 @@ def classfly(client_executor, addr):
             if(playing==True):#已經有人在玩
                 client_executor.send("sorry, someone playing...".encode('utf-8'))
             else:
+                client_executor.send("start".encode('utf-8'))
                 game1(client_executor,msg)
                 #client_executor.send("遊戲即將開始".encode('utf-8'))
         #要辨識人臉
@@ -227,22 +228,6 @@ def chatRecv(client_executor):
             chatCheck(client_executor, content, person, yesNo)
 ##Chat BOT(英文版)------------------------------
 def chatCheck(client_executor , content, person, yesNo):
-    # while(True): 
-    #     # str = "測試" 
-    #     who_recv = client_executor.recv(1024) 
-    #     who_jpy = jpysocket.jpydecode(who_recv) #jpy解碼 
-    #     print("收:",who_jpy) 
-    #     # str = input("input:") 
-    #     # client_executor.send(jpysocket.jpyencode(str)) 
-    #     # client_executor.send(str.encode('utf-8')) 
-    #     client_executor.send(bytes("46",encoding = 'utf8'))
-    # #分類給誰
-    # print("進chatBot****************************")
-    # print("content==",content, "person=",person)
-    # client_executor.send(bytes("456",encoding = 'utf8')) 
-    # return
-    # return
-
     global jsonPath
     jsonPath = ''
     if(person=='mina'):
@@ -551,6 +536,10 @@ def imgShot():
             if(pose != ""):
                 clients[0].send(pose.encode('utf-8'))
                 break
+            if(pose == '' and user == 0):
+                clients[0].send("pose;0 0".encode('utf-8'))
+                break
+
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -633,7 +622,7 @@ def seand_scale():
         scale_send = "scale; "+ str(scale)
        # print("scale_send=",scale_send)
         if(len(clients)==0):
-            print("none")
+            # print("none")
             n=2
         else:
             # print("yes")
@@ -641,7 +630,7 @@ def seand_scale():
                 clients[0].send(bytes(scale_send.encode('utf-8')))
         time.sleep(0.5)
 def Getface(image):
-    print("enter getface")
+    # print("enter getface")
     global scale
     list = 0
     cnt = 0
@@ -809,7 +798,7 @@ def face_recognizer():
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('192.168.2.102', 5555))
+    listener.bind(('192.168.56.1', 5050))
     listener.listen(20)
     print('Waiting for connect...')
     #建List

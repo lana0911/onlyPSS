@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 
             if (msg != null)
             {
-                //������openpose �� �^�Ǹ��??
+                //������openpose �� �^�Ǹ��??
                 if (msg_split[0] == "scale")
                 {
                     //Debug.Log("scale��" + msg_split[1]);
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
         }
        
     }*/
-    //�j�馬���??
+    //�j�馬���??
     void recvData()
     {
         int im = 1;
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
                     loadToDance();
                 }
 
-                //������openpose �� �^�Ǹ��??
+                //������openpose �� �^�Ǹ��??
                 if (msg_split[0]=="pose")
                 {
                     Debug.Log("Scan���G" + msg_split[1]);
@@ -215,7 +215,7 @@ public class GameManager : MonoBehaviour
                     //Gobal_TCP.Dcore = (Convert.ToInt32(str));
                     Debug.Log("Dcore=!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
-                ///�����`�I���??
+                ///�����`�I���??
                 if (msg_split[0] == "k")
                 {
                     //file text write
@@ -299,8 +299,17 @@ public class GameManager : MonoBehaviour
         string[] P = pose.Split(' ');
         string player = P[0];
         string model = P[1] ;
-        
-        
+
+//偵測不到的時候------------------------------------------
+
+        //偵測不出
+        if(model == "0" && player == "0"){
+            varName.modelPose = "姿勢不標準 請重來";
+            varName.modelPose = "不標準";
+            varName.playerPose = "不標準";
+            varName.winner = -1;
+        }
+//偵測不到的時候------------------------------------------
         //winner : 0=����, 1=model, 2=player
         //model�X�ŤM
         if (model == "1")

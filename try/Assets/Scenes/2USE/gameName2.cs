@@ -109,7 +109,7 @@ public class gameName2 : MonoBehaviour
         {
             varName.model_start_animation = false;
             Debug.Log("model_start_animation");
-            UnityChanControl.SetBool("start", true);
+            UnityChanControl.SetBool("start", true);//jump
             //做剪刀
             if (varName.modelPose == "剪刀 Scissor")
             {
@@ -135,6 +135,18 @@ public class gameName2 : MonoBehaviour
                 // StartCoroutine(win_lose(3.5f, 3));
 
             }
+//偵測不到的時候------------------------------------------
+            else if(varName.modelPose == "姿勢不標準 請重來")
+            {
+                //設定一個unityChan跳來後要接的pose
+            }
+//偵測不到的時候------------------------------------------
+
+
+
+
+
+
             //等1.5秒在收動作
             StartCoroutine(wait(3.0f, 4));
             //等1.5秒在print中文pose
@@ -188,6 +200,12 @@ public class gameName2 : MonoBehaviour
 
             else if (varName.modelPose == "布 Paper")
                 UnityChanControl.SetBool("paOver", true);
+//偵測不到的時候------------------------------------------
+            else if(varName.modelPose == "不標準")
+            {
+                //寫一個model跳起還後接的pose接的收尾
+            }
+//偵測不到的時候------------------------------------------
 
 
             //在等1.5s 印中文結果
@@ -196,31 +214,43 @@ public class gameName2 : MonoBehaviour
         if (type == 5)
         {
             Debug.Log("type5");
-            if (varName.winner == 1)//model win
-            {
-                Winner.text = "YOU LOSE";
-                UnityChanControl.SetBool("Win", true);
-                //音效
-                UnityChanVoice.clip = UnityChanVoiceClips[0];
-                UnityChanVoice.Play();
+            if(varName.winner >= 0){
+                if (varName.winner == 1)//model win
+                {
+                    Winner.text = "YOU LOSE";
+                    UnityChanControl.SetBool("Win", true);
+                    //音效
+                    UnityChanVoice.clip = UnityChanVoiceClips[0];
+                    UnityChanVoice.Play();
+                }
+                else if (varName.winner == 0)//model win
+                {
+                    Winner.text = "TIE";
+                    UnityChanControl.SetBool("Win", true);
+                    //音效
+                    UnityChanVoice.clip = UnityChanVoiceClips[0];
+                    UnityChanVoice.Play();
+                }
+                else if (varName.winner == 2)//player win
+                {
+                    Winner.text = "YOU WIN";
+                    UnityChanControl.SetBool("Lose", true);
+                    UnityChanVoice.clip = UnityChanVoiceClips[1];
+                    UnityChanVoice.Play();
+                }
+
+                ////在等2s 進入頒發獎品
+                StartCoroutine(wait(3.0f, 6)); 
+            } else {
+    //偵測不到的時候------------------------------------------
+                    Winner.text = "下次再加油";
+                    UnityChanControl.SetBool("Lose", true); 
+                    UnityChanVoice.clip = UnityChanVoiceClips[1];
+                    UnityChanVoice.Play();
+                    //跳過頒獎(type=6, ->goDown)
+                    StartCoroutine(wait(2.0f, 7));
+    //偵測不到的時候------------------------------------------
             }
-            else if (varName.winner == 0)//model win
-            {
-                Winner.text = "TIE";
-                UnityChanControl.SetBool("Win", true);
-                //音效
-                UnityChanVoice.clip = UnityChanVoiceClips[0];
-                UnityChanVoice.Play();
-            }
-            else if (varName.winner == 2)//player win
-            {
-                Winner.text = "YOU WIN";
-                UnityChanControl.SetBool("Lose", true);
-                UnityChanVoice.clip = UnityChanVoiceClips[1];
-                UnityChanVoice.Play();
-            }
-            ////在等2s 進入頒發獎品
-            StartCoroutine(wait(3.0f, 6)); 
         }
         if (type == 6)
         {
@@ -292,6 +322,11 @@ public class gameName2 : MonoBehaviour
            // InvokeRepeating("goDown_Forlight", 1, 0.005f);
 
         }
+//偵測不到的時候------------------------------------------
+        else if (varName.winner == -1){
+
+        }
+//偵測不到的時候------------------------------------------
 
     }
     //----------------------------------------------------------------------------------
