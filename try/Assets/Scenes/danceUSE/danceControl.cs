@@ -143,7 +143,7 @@ public class danceControl: MonoBehaviour
     void bgWithCore()
     {
         //90~100分
-        if (Gobal_TCP.Dcore >= 90 && Gobal_TCP.Dcore <= 100)
+        if (Gobal_TCP.Dcore >= 900 && Gobal_TCP.Dcore <= 1000)
         {
             judge.text = "太厲害了!!";
             Ogood.SetActive(true);
@@ -151,7 +151,7 @@ public class danceControl: MonoBehaviour
             StartCoroutine(wait(2.5f));
         }
         //60~90分
-        else if (Gobal_TCP.Dcore < 90 && Gobal_TCP.Dcore >= 60)
+        else if (Gobal_TCP.Dcore < 900 && Gobal_TCP.Dcore >= 600)
         {
             judge.text = "還不錯喔";
             Onor.SetActive(true);
@@ -159,7 +159,7 @@ public class danceControl: MonoBehaviour
             StartCoroutine(wait(2.5f));
         }
         //60分下
-        else if (Gobal_TCP.Dcore <= 60)
+        else if (Gobal_TCP.Dcore <= 600)
         {
             Obad.SetActive(true);
             judge.text = "多多加油";
@@ -184,6 +184,7 @@ public class danceControl: MonoBehaviour
     IEnumerator wait(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        Debug.Log("跳舞結束");
         //規0
         Gobal_TCP.handup = false;
         Gobal_TCP.videoOver = false;

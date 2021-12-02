@@ -389,7 +389,7 @@ public class gameName2 : MonoBehaviour
     //截圖------------------------------------------------------------
     void CapImg()
     {
-        string path = "D:/screenshot" + "/Shot.png";
+        string path = "D:\\大學\\onlyPSS1120\\onlyPSS\\essia\\Shot.png";
         Debug.Log("Path : " + Application.persistentDataPath);
         Debug.Log("Path2 : " + Application.streamingAssetsPath);
         Debug.Log("123");
@@ -428,7 +428,7 @@ public class gameName2 : MonoBehaviour
         RenderTexture.active = null;
         UnityEngine.Object.Destroy(rt);
         byte[] bytes = screenShot.EncodeToPNG();
-        string filename = "D:/screenshot" + "/Shot.png";
+        string filename = "D:\\大學\\onlyPSS1120\\onlyPSS\\essia\\Shot.png";
         System.IO.File.WriteAllBytes(filename, bytes);
     }
     public void CaptureScreenByRT(Camera camera)
@@ -451,7 +451,7 @@ public class gameName2 : MonoBehaviour
         GameObject.Destroy(rt);
         // 最后将这些纹理数据，成一个png图片文件  
         byte[] bytes = screenShot.EncodeToPNG();
-        string fileName = "D:/screenshot" + "/Shot.png";
+        string fileName = "D:\\大學\\onlyPSS1120\\onlyPSS\\essia\\Shot.png";
 
         System.IO.File.WriteAllBytes(fileName, bytes);
     }

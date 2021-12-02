@@ -1,11 +1,11 @@
 import os
-from os import truncate
-import numpy as np
+# from os import truncate
+# import numpy as np
 import cv2
 import socket
 import threading
 import time
-from threading import Timer
+# from threading import Timer
 import jpysocket
 import base64
 import time
@@ -14,19 +14,19 @@ import sys
 from sys import platform
 import argparse
 # import imutils
-import glob
+# import glob
 import random
 import math
 import argparse
+import time
 i=0
 
 # 憶萱區
-import jieba
-import random
-import json
-import chatgui
-import os 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+# import jieba
+# import random
+# import json
+# import chatgui
+# import os
 
 #編號
 index = 0
@@ -56,7 +56,7 @@ clients=[]
 yesOrno = "yes"
 ChatToWho = "empty"
 jsonPath = 'empty' 
-
+yuhanVar = False
 cellphone=[]
 imgStatus=[0] * 20
 #分類
@@ -69,8 +69,8 @@ def classfly(client_executor, addr):
     
     
     #////////////////
-    # who_jpy = who #local run時
-    who_jpy = jpysocket.jpydecode(who_recv) #jpy解碼
+    who_jpy = who #local run時
+    # who_jpy = jpysocket.jpydecode(who_recv) #jpy解碼
     #////////////////
 
 
@@ -99,13 +99,13 @@ def classfly(client_executor, addr):
         #不斷接收client(手機)傳來的訊息
         # while True:
         msg = client_executor.recv(1024) 
-        # msg = msg.decode('utf-8')  
+        msg = msg.decode('utf-8')  
        
        
        
         #////////////////
-        # msg_jpy = msg    #local run時
-        msg_jpy = jpysocket.jpydecode(msg)
+        msg_jpy = msg    #local run時
+        # msg_jpy = jpysocket.jpydecode(msg)
         #////////////////
         
         
@@ -184,8 +184,9 @@ def classfly(client_executor, addr):
         if(target == "pauma"):
             text(client_executor,msg)
         if(target == "game2"):
+            print("target=game2")
             global playing2 
-            if(playing2==False):#已經有人在玩
+            if(playing2==True):#已經有人在玩
                 print("game2有人在玩")
                 client_executor.send("sorry, someone playing...".encode('utf-8'))
             else:
@@ -208,9 +209,42 @@ def classfly(client_executor, addr):
     elif(who == "4"):
         print("收到4")
         kinect(client_executor)
+    elif(who == "5"):
+        print("收到5")
+        yuhan(client_executor)
 
     else:
         print("不是空/不是unity/不是手機端")
+
+def yuhan(client_executor):
+    print("1231343ryjkyiluiou")
+    global yuhanVar
+    while(True):
+        # print("yuhan funct",yuhanVar)
+
+        if(yuhanVar):
+            print('start send image')
+            imgFile = open("Shot.png", "rb")
+            while True:
+                imgData = imgFile.readline(1024)
+                client_executor.send(imgData)
+                print("+++");
+                print(imgData);
+                print("+++");
+                if not imgData:
+                    time.sleep(1);
+                    client_executor.send(b'')
+                    break  # 讀完s檔案結束迴圈
+            imgFile.close()
+            
+            yuhanVar = False
+            print('transmit end')
+
+
+    who_recv = client_executor.recv(1024)
+    who = who_recv.decode('utf-8')
+    clients[0].send(bytes(who.encode('utf-8')))
+
 def chatRecv(client_executor):
     print("-----------------開始監聽Chat傳來的訊息----------------------")
     i=0
@@ -227,6 +261,7 @@ def chatRecv(client_executor):
             chatCheck(client_executor, content, person, yesNo)
 ##Chat BOT(英文版)------------------------------
 def chatCheck(client_executor , content, person, yesNo):
+    print("chatCheck")
     # while(True): 
     #     # str = "測試" 
     #     who_recv = client_executor.recv(1024) 
@@ -267,7 +302,7 @@ def chatCheck(client_executor , content, person, yesNo):
         print("-----------------------------")
    
 
-##Chat BOT(中文版)------------------------------
+#Chat BOT(中文版)------------------------------
 def chat(client_executor ,msg, sendTo, ChatToWho):
     #分類給誰
     global jsonPath
@@ -377,14 +412,18 @@ def unityRecv(client_executor):
     print("-----------------開始監聽unity傳來的訊息----------------------")
     global playing 
     global playing2 
+    global yuhan
     while True:
         recv = client_executor.recv(1024).decode('utf-8')
         recv_split = recv.split(";")
         print("unity傳來:",recv_split)
         if(recv_split[0]=="pose"):#看板說現在給結果!
             startPose()
+            global yuhan
+            yuhan = True
         if(recv_split[0]=="shot"):#讀取截圖 測試用
-            imgShot()
+            print("imgShot")
+            imgShot(client_executor)
         elif(recv_split[0]=="over"):
             playing = False
             global t_face
@@ -409,151 +448,12 @@ def cal_ang(p1, p2, p3):
     # if angle < 0:
     #    angle= angle + 360
     return angle
-def imgShot():
-    print("enter imgshot")
-    path = "D:/openpose-1.6.0/build/Shot.png"
-    # 將unity的截圖show出來
-    cap = cv2.imread("D:/openpose-1.6.0//build//Shot.png")
-    # img = cv2.resize(cap, (256, 320))
-    # cv2.imwrite("D:/openpose-1.6.0//build//Shot.png", img)
-    """ 
-    !!!!!!!!!!!!!To聿涵: 
-                    要show的話imshow就不能傳值 
-                    所以你要測試的話要注意
-                    建議直接去看D:/screenshot的Shot.png我存在那
-    """
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    try:
-        # Windows Import
-        if platform == "win32":
-            # Change these variables to point to the correct folder (Release/x64 etc.)
-            sys.path.append(dir_path + '/../../python/openpose/Release')
-            # os.environ['PATH'] = os.environ['PATH'] + ';' + \
-            #    dir_path + '/../../x64/Release;' + dir_path + '/../../bin;'
-            os.add_dll_directory(dir_path + '/../../x64/Release')
-            os.add_dll_directory(dir_path + '/../../bin')
+def imgShot(client_executor): #unity IP
+    global yuhanVar
+    yuhanVar = True
 
-            import pyopenpose as op
-        else:
-            # Change these variables to point to the correct folder (Release/x64 etc.)
-            sys.path.append('../../python')
-            # If you run `make install` (default path is `/usr/local/python` for Ubuntu), you can also access the OpenPose/python module from there. This will install OpenPose and the python library at your desired installation path. Ensure that this is in your python path in order to use it.
-            # sys.path.append('/usr/local/python')
-            from openpose import pyopenpose as op
-    except ImportError as e:
-        print('Error: OpenPose library could not be found. Did you enable `BUILD_PYTHON` in CMake and have this Python script in the right folder?')
-        raise e
-
-    # Flags
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--image_path", default="../../../examples/media/COCO_val2014_000000000192.jpg",
-                        help="Process an image. Read all standard formats (jpg, png, bmp, etc.).")
-    args = parser.parse_known_args()
-
-    # Custom Params (refer to include/openpose/flags.hpp for more parameters)
-    params = dict()
-    params["model_folder"] = "../../../models/"
-    params["net_resolution"] = "256x320"
-
-    # Add others in path?
-    for i in range(0, len(args[1])):
-        curr_item = args[1][i]
-        if i != len(args[1])-1:
-            next_item = args[1][i+1]
-        else:
-            next_item = "1"
-        if "--" in curr_item and "--" in next_item:
-            key = curr_item.replace('-', '')
-            if key not in params:
-                params[key] = "1"
-        elif "--" in curr_item and "--" not in next_item:
-            key = curr_item.replace('-', '')
-            if key not in params:
-                params[key] = next_item
-
-    # Construct it from system arguments
-    # op.init_argv(args[1])
-    # oppython = op.OpenposePython()
-
-    # Starting OpenPose
-
-    #opWrapper = op.WrapperPython(op.ThreadManagerMode.Synchronous)
-    opWrapper = op.WrapperPython()
-    opWrapper.configure(params)
-    opWrapper.start()
-    # opWrapper.execute()
-    print("start")
-    datum = op.Datum()
-    pose = ""
-    uans = "a"
-    cans = "a"
-    num = "0"
-    user = 0
-    while True:
-        print("read")
-        cap = cv2.imread("D:/openpose-1.6.0//build//Shot.png")
-        print("read end")
-        datum.cvInputData = cap
-        print("op")
-        opWrapper.emplaceAndPop([datum])
-        # print(str(datum.poseKeypoints))
-        print("frame")
-        frame = datum.cvOutputData
-
-        if(str(datum.poseKeypoints) == "2.0" or str(datum.poseKeypoints) == "0.0"):  # 無偵測到人
-            print("countinue")
-            continue
-        else:
-            ans = random.randint(1, 3)
-            print("cal ang")
-            ang = cal_ang(
-                datum.poseKeypoints[0][11], datum.poseKeypoints[0][8], datum.poseKeypoints[0][14])
-            print("ang end")
-            if ang >= 0:
-                uans = "usc"
-                user = 1
-            elif ang <= -17:
-                uans = "up"
-                user = 3
-            elif ang < -2:
-                uans = "ust"
-                user = 2
-            else:
-                uans = " "
-                user = 0
-
-            if ans == 1:
-                if user == 1:
-                    pose = "pose;1 1"
-                elif user == 2:
-                    pose = "pose;2 1"
-                else:
-                    pose = "pose;3 1"
-                cans = "psc"
-            elif ans == 2:
-                if user == 1:
-                    pose = "pose;1 2"
-                elif user == 2:
-                    pose = "pose;2 2"
-                else:
-                    pose = "pose;3 2"
-                cans = "pst"
-            elif ans == 3:
-                if user == 1:
-                    pose = "pose;1 3"
-                elif user == 2:
-                    pose = "pose;2 3"
-                else:
-                    pose = "pose;3 3"
-                cans = "pp"
-            print("pose;" + uans + " " + cans)
-            print(pose)
-            if(pose != ""):
-                clients[0].send(pose.encode('utf-8'))
-                break
-
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    print("imgshot的yuhan",yuhanVar)
+    
 
 def imgShot2():
     print("enter imgshot")
@@ -607,7 +507,7 @@ def game1(client_executor,content):
 
 #玩跳舞
 def game2(client_executor,content):
-    
+    print("game2")
     #遊戲使用中
     global playing2 
     playing2 = True
@@ -633,7 +533,7 @@ def seand_scale():
         scale_send = "scale; "+ str(scale)
        # print("scale_send=",scale_send)
         if(len(clients)==0):
-            print("none")
+            # print("none")
             n=2
         else:
             # print("yes")
@@ -641,12 +541,12 @@ def seand_scale():
                 clients[0].send(bytes(scale_send.encode('utf-8')))
         time.sleep(0.5)
 def Getface(image):
-    print("enter getface")
+    # print("enter getface")
     global scale
     list = 0
     cnt = 0
     cvo = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-    cvo.load('C:/Users/Lana/AppData/Local/Programs/Python/Python39/cv2/data/haarcascade_frontalface_default.xml')
+    cvo.load('C:\\Users\\user\\anaconda3\\Lib\\site-packages\\cv2\\data\\haarcascade_frontalface_default.xml')
     #灰階
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     #辨識
@@ -809,7 +709,7 @@ def face_recognizer():
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('192.168.2.102', 5555))
+    listener.bind(('10.22.27.161', 5050))
     listener.listen(20)
     print('Waiting for connect...')
     #建List

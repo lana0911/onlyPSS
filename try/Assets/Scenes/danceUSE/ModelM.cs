@@ -367,6 +367,7 @@ public class ModelM : MonoBehaviour
 
 				// print("modelMove second");
 			}
+			score = 958;
 			if (txtCount == 25)
 			{   //reset
 				print("reset!!!!!!!!!11");

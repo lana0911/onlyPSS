@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     int winner;
 
     //file text write
-    string path = @"d:\å¤§å­¸\onlyPSS\onlyPSS\\test1.txt";
+    string path = @"d:\´óŒW\onlyPSS\onlyPSS\\test1.txt";
 	string[] createText = {""};
 
     static GameManager instance;
@@ -220,9 +220,9 @@ public class GameManager : MonoBehaviour
                 {
                     //file text write
                     if(Gobal_video.status == 1 && Gobal_video.timeFlag == 1) {
-                        string appendText = msg + Environment.NewLine;
+                        // string appendText = msg + Environment.NewLine;
                         // print(msg);
-                        File.AppendAllText(path, appendText, Encoding.UTF8);
+                        // File.AppendAllText(path, appendText, Encoding.UTF8);
                         Gobal_video.timeFlag = 0;
                         // print("gameManage second");
                     }
@@ -305,65 +305,65 @@ public class GameManager : MonoBehaviour
         //modelï¿½Xï¿½Å¤M
         if (model == "1")
         {
-            varName.modelPose = "ï¿½Å¤M Scissor";
+            varName.modelPose = "¼ôµ¶ Scissor";
             if (player == "1")
             {
-                varName.playerPose = "ï¿½Å¤M Scissor";
+                varName.playerPose = "¼ôµ¶ Scissor";
                 varName.winner = 0;
             }
                 
             else if (player == "2")
             {
                 varName.winner = 2;
-                varName.playerPose = "ï¿½ï¿½ï¿½Y Stone";
+                varName.playerPose = "Ê¯î^ Stone";
 
             }
             else
             {
                 varName.winner = 1;
-                varName.playerPose = "ï¿½ï¿½ Paper";
+                varName.playerPose = "²¼ Paper";
 
             }
         }
         //modelï¿½Xï¿½ï¿½ï¿½Y
         else if (model == "2")
         {
-            varName.modelPose = "ï¿½ï¿½ï¿½Y Stone";
+            varName.modelPose = "Ê¯î^ Stone";
             if (player == "1")
             {
                 varName.winner = 1;
-                varName.playerPose = "ï¿½Å¤M Scissor";
+                varName.playerPose = "¼ôµ¶ Scissor";
 
             }
             else if (player == "2")
             { 
                 varName.winner = 0;
-                varName.playerPose = "ï¿½ï¿½ï¿½Y Stone";
+                varName.playerPose = "Ê¯î^ Stone";
             }
             else
             {
                 varName.winner = 2;
-                varName.playerPose = "ï¿½ï¿½ Paper";
+                varName.playerPose = "²¼ Paper";
             }
         }
         //modelï¿½Xï¿½ï¿½
         else if (model == "3")
         {
-            varName.modelPose = "ï¿½ï¿½ Paper";
+            varName.modelPose = "²¼ Paper";
             if (player == "1")
             {
                 varName.winner = 2;
-                varName.playerPose = "ï¿½Å¤M Scissor";
+                varName.playerPose = "¼ôµ¶ Scissor";
             }
             else if (player == "2")
             {
                 varName.winner = 1;
-                varName.playerPose = "ï¿½ï¿½ï¿½Y Stone";
+                varName.playerPose = "Ê¯î^ Stone";
             }
             else
             {
                 varName.winner = 0;
-                varName.playerPose = "ï¿½ï¿½ Paper";
+                varName.playerPose = "²¼ Paper";
 
             }
         }
