@@ -245,7 +245,7 @@ def chatCheck(client_executor , content, person, yesNo):
         chat(client_executor, content, yesNo, person)
     else:
         client_executor.send(bytes(ans,encoding = 'utf8'))#給手機
-        answer = "text;" + ans
+        answer = "text;" + person + ":" + ans
         if(yesNo == "yes"):
             print("yes")
             text(client_executor, answer) #給看板
@@ -305,7 +305,7 @@ def chat(client_executor ,msg, sendTo, ChatToWho):
     # client_executor.send(jpysocket.jpyencode(answer))
     # client_executor.send(str.encode('utf-8'))# 
     client_executor.send(bytes(answer,encoding = 'utf8'))
-    answer = "text;"+answer
+    answer = "text;"+ ChatToWho + ":" + answer
     if(sendTo == "yes"):
         print("yes")
         text(client_executor, answer)
@@ -353,7 +353,7 @@ def imgWrite(client_executor):
     # print("img_index=",img_index)   
     # imgStatus[int(img_index)] = 1
     # print("更改",imgStatus)
-    time.sleep(1)        
+    time.sleep(1.3)        
  
 
 #接收unity傳來的
@@ -751,7 +751,7 @@ def face_recognizer():
     idnum = 0
     #設定好與ID號碼對應的使用者名稱，如下，如0對應的就是初始
 
-    names = ['初始','Chaeyoung','mina','Nayeon','momo']
+    names = ['初始','Chaeyoung','mina','Nayeon','momo', 'Tzuyu']
 
     #呼叫攝像頭
     # cam = cv2.VideoCapture(0)
@@ -798,7 +798,7 @@ def face_recognizer():
 if __name__ == '__main__':
     # IP , Port......設定
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listener.bind(('192.168.56.1', 5050))
+    listener.bind(('10.40.192.183', 5050))
     listener.listen(20)
     print('Waiting for connect...')
     #建List
